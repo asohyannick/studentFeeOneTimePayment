@@ -1,0 +1,32 @@
+spring:
+  cache:
+    type: simple
+    autoconfigure:
+      exclude: org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+    database-platform: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: true
+
+server:
+  port: 8081
+
+logging:
+  level:
+    root: INFO
+    com.leedTech: DEBUG
+
+springdoc:
+  swagger-ui:
+    enabled: true
+  api-docs:
+    enabled: true
