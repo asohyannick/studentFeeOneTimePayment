@@ -27,6 +27,22 @@ spring:
         ddl-auto: validate
       show-sql: true
       open-in-view: false
+  mail:
+    host: ${MAIL_TRAP_HOST}
+    port: ${MAIL_TRAP_PORT}
+    username: ${MAIL_TRAP_USERNAME}
+    password: ${MAIL_TRAP_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+        debug: false
+  mailtrap:
+    from-email: ${MAIL_FROM}
+    from-name: ${MAIL_FROM_NAME}
 
 server:
   port: ${PORT}
@@ -38,6 +54,7 @@ jwt:
   secret-key: ${JWT_SECRET_KEY}
   access-token-expiration-ms: ${JWT_ACCESS_TOKEN_EXPIRATION_MS}
   refresh-token-expiration-ms: ${JWT_REFRESH_TOKEN_EXPIRATION_MS}
+  magic-link-expiration-ms: ${JWT_MAGIC_LINK_EXPIRATION_TOKEN_MS}
 
 stripe:
   api-key: ${STRIPE_API_KEY}

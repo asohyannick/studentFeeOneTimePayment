@@ -16,11 +16,8 @@ public record GlobalExceptionResponseHandler(
 		@Schema(description = "HTTP status code", example = "403")
 		int status,
 		
-		@Schema(description = "HTTP status name", example = "FORBIDDEN")
+		@Schema(description = "Application status code", example = "FORBIDDEN")
 		String statusCode,
-		
-		@Schema(description = "Application error code", example = "FORBIDDEN")
-		String errorCode,
 		
 		@Schema(description = "Request path", example = "/api/v1/payments")
 		String path,

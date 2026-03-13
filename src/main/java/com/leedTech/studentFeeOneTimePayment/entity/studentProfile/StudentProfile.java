@@ -140,8 +140,6 @@ private Double gpa;
 @Column(name = "enrollment_status", length = 30)
 private EnrollmentStatus enrollmentStatus;
 
-// ─── Parent / Guardian Information ──────────────────────────────
-
 @Column(name = "father_name", length = 100)
 private String fatherName;
 

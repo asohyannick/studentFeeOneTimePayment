@@ -179,9 +179,9 @@ public ResponseEntity<CustomResponseMessage<Void>> sendMagicLink(
 		@ApiResponse(responseCode = "200", description = "Magic link verified and login successful"),
 		@ApiResponse(responseCode = "400", description = "Invalid or expired magic link")
 })
-@GetMapping("/magic-link/verify")
+@PostMapping("/magic-link/verify")
 public ResponseEntity<CustomResponseMessage<LoginResponseDto>> verifyMagicLink(
-		@RequestParam String token,
+		@RequestParam VerifyMagicLinkToken token,
 		HttpServletResponse response
 ) {
 	LoginResponseDto data = userService.verifyMagicLink(token, response);
@@ -310,6 +310,54 @@ public ResponseEntity<CustomResponseMessage<LoginResponseDto>> googleLogin(
 					data.message(),
 					HttpStatus.OK.value(),
 					data
+			)
+	);
+}
+
+@Operation(
+		summary = "Block a student account",
+		description = "Blocks a student account preventing them from logging in"
+)
+@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "Student blocked successfully"),
+		@ApiResponse(responseCode = "400", description = "Student already blocked or user is not a student"),
+		@ApiResponse(responseCode = "404", description = "Student not found"),
+		@ApiResponse(responseCode = "403", description = "Forbidden - Admin access required")
+})
+@PatchMapping("/students/{studentId}/block")
+public ResponseEntity<CustomResponseMessage<Void>> blockStudent(
+		@PathVariable UUID studentId
+) {
+	userService.blockStudent(studentId);
+	return ResponseEntity.ok(
+			new CustomResponseMessage<>(
+					"Student account blocked successfully.",
+					HttpStatus.OK.value(),
+					null
+			)
+	);
+}
+
+@Operation(
+		summary = "Unblock a student account",
+		description = "Unblocks a previously blocked student account restoring their access"
+)
+@ApiResponses({
+		@ApiResponse(responseCode = "200", description = "Student unblocked successfully"),
+		@ApiResponse(responseCode = "400", description = "Student is not blocked or user is not a student"),
+		@ApiResponse(responseCode = "404", description = "Student not found"),
+		@ApiResponse(responseCode = "403", description = "Forbidden - Admin access required")
+})
+@PatchMapping("/students/{studentId}/unblock")
+public ResponseEntity<CustomResponseMessage<Void>> unblockStudent(
+		@PathVariable UUID studentId
+) {
+	userService.unblockStudent(studentId);
+	return ResponseEntity.ok(
+			new CustomResponseMessage<>(
+					"Student account unblocked successfully.",
+					HttpStatus.OK.value(),
+					null
 			)
 	);
 }

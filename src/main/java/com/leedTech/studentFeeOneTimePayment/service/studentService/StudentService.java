@@ -143,7 +143,6 @@ public StudentProfileResponseDto updateStudentProfile(
 	
 	studentProfileMapper.updateEntityFromDto(request, profile);
 	
-	// Upload new profile picture if provided
 	if (profilePicture != null && !profilePicture.isEmpty()) {
 		String imageUrl = profilePictureService.uploadProfilePicture(studentProfileId, profilePicture);
 		profile.setProfilePictureUrl(imageUrl);

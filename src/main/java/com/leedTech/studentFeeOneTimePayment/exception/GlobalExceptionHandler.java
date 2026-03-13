@@ -14,7 +14,6 @@ private ResponseEntity<GlobalExceptionResponseHandler> buildResponse(
 		String message,
 		String details,
 		String statusCode,
-		String errorCode,
 		HttpStatus status,
 		HttpServletRequest request
 ) {
@@ -26,7 +25,6 @@ private ResponseEntity<GlobalExceptionResponseHandler> buildResponse(
 					details,
 					status.value(),
 					statusCode,
-					errorCode,
 					request.getRequestURI(),
 					request.getMethod()
 			);
@@ -44,7 +42,6 @@ public ResponseEntity<GlobalExceptionResponseHandler> handleNotFoundException(
 			ex.getMessage(),
 			"Resource not found!",
 			HttpStatus.NOT_FOUND.getReasonPhrase(),
-			"NOT_FOUND",
 			HttpStatus.NOT_FOUND,
 			request
 	);
@@ -66,7 +63,6 @@ public ResponseEntity<GlobalExceptionResponseHandler> handleValidationException(
 			errorMessage,
 			"Invalid request payload",
 			HttpStatus.BAD_REQUEST.getReasonPhrase(),
-			"BAD_REQUEST",
 			HttpStatus.BAD_REQUEST,
 			request
 	);
@@ -81,7 +77,6 @@ public ResponseEntity<GlobalExceptionResponseHandler> handleUnauthorizedExceptio
 			ex.getMessage(),
 			"Authentication failed",
 			HttpStatus.UNAUTHORIZED.getReasonPhrase(),
-			"UNAUTHORIZED",
 			HttpStatus.UNAUTHORIZED,
 			request
 	);
@@ -96,7 +91,6 @@ public ResponseEntity<GlobalExceptionResponseHandler> handleAccessDeniedExceptio
 			ex.getMessage(),
 			"Access denied",
 			HttpStatus.FORBIDDEN.getReasonPhrase(),
-			"FORBIDDEN",
 			HttpStatus.FORBIDDEN,
 			request
 	);
@@ -111,7 +105,6 @@ public ResponseEntity<GlobalExceptionResponseHandler> handleConflictException(
 			ex.getMessage(),
 			"Conflict occurred",
 			HttpStatus.CONFLICT.getReasonPhrase(),
-			"CONFLICT",
 			HttpStatus.CONFLICT,
 			request
 	);
@@ -126,7 +119,6 @@ public ResponseEntity<GlobalExceptionResponseHandler> handleGlobalException(
 			ex.getMessage(),
 			"An unexpected error occurred",
 			HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(),
-			"INTERNAL_SERVER_ERROR",
 			HttpStatus.INTERNAL_SERVER_ERROR,
 			request
 	);

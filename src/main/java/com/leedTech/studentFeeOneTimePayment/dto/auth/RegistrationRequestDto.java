@@ -1,7 +1,9 @@
 package com.leedTech.studentFeeOneTimePayment.dto.auth;
 
-import com.leedTech.studentFeeOneTimePayment.constant.UserRole;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 public record RegistrationRequestDto(
 		
@@ -26,9 +28,5 @@ public record RegistrationRequestDto(
 		String password,
 		
 		@NotBlank(message = "Confirm password is required")
-		String confirmPassword,
-		
-		@NotNull(message = "Role is required")
-		UserRole role
-
+		String confirmPassword
 ) {}

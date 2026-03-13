@@ -3,7 +3,11 @@ package com.leedTech.studentFeeOneTimePayment.repository.userRepository;
 import com.leedTech.studentFeeOneTimePayment.constant.UserRole;
 import com.leedTech.studentFeeOneTimePayment.entity.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -13,4 +17,6 @@ Optional<User> findByEmail(String email);
 boolean existsByEmail(String email);
 List<User> findAllByRole( UserRole role);
 Optional<User> findByMagicLinkToken(String magicLinkToken);
+@Query ("SELECT u FROM User u WHERE u.otpCode IS NOT NULL AND u.otpExpirationDate > :now")
+List<User> findUsersWithActiveOtp(@Param ("now") Instant now);
 }

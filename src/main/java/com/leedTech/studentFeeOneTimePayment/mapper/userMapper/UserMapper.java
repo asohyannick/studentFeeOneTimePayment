@@ -21,6 +21,7 @@ public interface UserMapper {
 @Mapping(target = "accountBlocked", constant = "false")
 @Mapping(target = "failedLoginAttempts", constant = "0")
 @Mapping (target = "otpCode", ignore = true)
+@Mapping(target = "role",    ignore = true)
 @Mapping (target = "otpExpirationDate", ignore = true)
 @Mapping(target = "magicLinkToken", ignore = true)
 @Mapping(target = "magicLinkExpirationDate", ignore = true)

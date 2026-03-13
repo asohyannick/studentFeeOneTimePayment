@@ -1,10 +1,10 @@
-# 🎓 Student Fee One-Time Payment API
+# 🎓✨ Student Fee One-Time Payment API 💳🏫
 
-> **Built by [Asoh Yannick](https://github.com/asohyannick)** — Java Software Developer passionate about Spring Boot, Docker, Spring AI, and building clean, scalable backend systems.
+> **Built by [Asoh Yannick](https://github.com/asohyannick)** 👨‍💻🚀 — Java Software Developer passionate about Spring Boot 🌱, Docker 🐳, Spring AI 🤖, and building clean, scalable backend systems 🏗️⚡.
 
 ---
 
-## 📌 Table of Contents
+## 📌🗂️ Table of Contents
 
 - [Overview](#-overview)
 - [Author](#-author)
@@ -28,382 +28,382 @@
 
 ---
 
-## 🌟 Overview
+## 🌟💡 Overview
 
-The **Student Fee One-Time Payment API** is a production-grade RESTful backend built for **LeedTech's Student Management Platform**. It enables students and administrators to process one-time fee payments, automatically calculates institution-provided incentive credits (matching program), updates student account balances in real time, and determines the next payment due date — all while processing payments securely through **Stripe**.
+The ✨ **Student Fee One-Time Payment API** ✨ is a production-grade 🏭 RESTful backend built for **LeedTech's Student Management Platform** 🎓. It enables students 👩‍🎓👨‍🎓 and administrators 👩‍💼👨‍💼 to process one-time fee payments 💰, automatically calculates institution-provided incentive credits 🎁 (matching program), updates student account balances 📊 in real time ⚡, and determines the next payment due date 📅 — all while processing payments securely 🔐 through **Stripe** 💳.
 
-This project was designed and implemented as part of a **Full Stack Engineering Interview Exercise** and reflects real-world software engineering standards including clean architecture, domain modeling, validation, edge-case handling, and comprehensive test coverage.
+This project was designed and implemented as part of a **Full Stack Engineering Interview Exercise** 🧠 and reflects real-world software engineering standards 🌍 including clean architecture 🏛️, domain modeling 📐, validation ✅, edge-case handling 🔍, and comprehensive test coverage 🧪.
 
 ---
 
-## 👨‍💻 Author
+## 👨‍💻🧑‍🎨 Author
 
-| Field        | Details                                      |
+| Field 🏷️       | Details 📋                                    |
 |--------------|----------------------------------------------|
-| **Name**     | Asoh Yannick                                 |
-| **Role**     | Java Software Developer                      |
-| **Stack**    | Spring Boot · Docker · Spring AI · PostgreSQL |
-| **Passion**  | Clean architecture, scalable APIs, DevOps    |
+| **Name** 👤    | Asoh Yannick                                 |
+| **Role** 💼    | Java Software Developer                      |
+| **Stack** 🛠️  | Spring Boot · Docker · Spring AI · PostgreSQL |
+| **Passion** ❤️ | Clean architecture, scalable APIs, DevOps    |
 
-> 💡 *"I don't just write code — I design systems that are maintainable, testable, and production-ready from day one."*
+> 💡✨ *"I don't just write code — I design systems that are maintainable, testable, and production-ready from day one."* 🏆🎯
 
 ---
 
-## 🛠️ Tech Stack
+## 🛠️⚙️ Tech Stack
 
-| Layer              | Technology                                      |
+| Layer 🗂️             | Technology ⚙️                                   |
 |--------------------|-------------------------------------------------|
-| **Language**       | Java 21                                         |
-| **Framework**      | Spring Boot 3.5.8                               |
-| **Database**       | PostgreSQL 17                                  |
-| **ORM**            | Spring Data JPA + Hibernate                     |
-| **Migration**      | Flyway                                          |
-| **Security**       | Spring Security + JWT + Firebase Auth           |
-| **Payments**       | Stripe Java SDK 31.4.1                          |
-| **File Upload**    | Cloudinary (HTTP5 adapter)                      |
-| **Caching**        | Redis                                           |
-| **Mapping**        | MapStruct 1.6.3                                 |
-| **Email**          | Mailtrap Java SDK                               |
-| **Docs**           | SpringDoc OpenAPI (Swagger UI)                  |
-| **Containerization** | Docker + Docker Compose                       |
-| **Build Tool**     | Maven                                           |
-| **Lombok**         | Yes — for boilerplate reduction                 |
+| **Language** 📝      | Java 21 ☕                                      |
+| **Framework** 🧱     | Spring Boot 3.5.8 🌱                            |
+| **Database** 🗄️     | PostgreSQL 17 🐘                                |
+| **ORM** 🔗           | Spring Data JPA + Hibernate 🔄                  |
+| **Migration** 🚀     | Flyway 🛫                                       |
+| **Security** 🔐      | Spring Security + JWT + Firebase Auth 🔥        |
+| **Payments** 💳      | Stripe Java SDK 31.4.1 💰                       |
+| **File Upload** 📸   | Cloudinary (HTTP5 adapter) ☁️                   |
+| **Caching** ⚡       | Redis 🔴                                        |
+| **Mapping** 🗺️      | MapStruct 1.6.3 🔀                              |
+| **Email** 📧         | Mailtrap Java SDK 📬                            |
+| **Docs** 📖          | SpringDoc OpenAPI (Swagger UI) 📄               |
+| **Containerization** 🐳 | Docker + Docker Compose 📦                  |
+| **Build Tool** 🔨    | Maven 🏗️                                       |
+| **Lombok** ✂️        | Yes — for boilerplate reduction 🧹              |
 
 ---
 
-## 🏗️ Project Architecture
+## 🏗️🏛️ Project Architecture
 
-This project follows a **Layered Architecture** with clear separation of concerns:
+This project follows a **Layered Architecture** 🧅 with clear separation of concerns 🎯:
 
 ```
 ┌─────────────────────────────────────────────────────┐
-│                   Controllers Layer                  │
+│              🌐 Controllers Layer                    │
 │    (HTTP endpoints, request/response handling)       │
 ├─────────────────────────────────────────────────────┤
-│                   Services Layer                     │
+│              ⚙️  Services Layer                      │
 │   (Business logic, orchestration, transactions)      │
 ├─────────────────────────────────────────────────────┤
-│                 Domain / Entity Layer                │
+│              🧬 Domain / Entity Layer                │
 │      (JPA Entities, Domain Models, Enums)            │
 ├─────────────────────────────────────────────────────┤
-│                 Repository Layer                     │
+│              🗃️  Repository Layer                    │
 │   (Spring Data JPA, JpaSpecificationExecutor)        │
 ├─────────────────────────────────────────────────────┤
-│               Infrastructure Layer                   │
+│              🔌 Infrastructure Layer                 │
 │  (Stripe, Cloudinary, Redis, Firebase, Mailtrap)     │
 └─────────────────────────────────────────────────────┘
 ```
 
-### 📦 Key Domain Models
+### 📦🧩 Key Domain Models
 
-| Entity             | Description                                              |
+| Entity 🗂️          | Description 📋                                            |
 |--------------------|----------------------------------------------------------|
-| `User`             | Authentication entity (all roles — ADMIN, STUDENT, etc.) |
-| `StudentProfile`   | Full student record with 60+ fields                      |
-| `StudentAccount`   | Tracks student fee balance and next due date             |
-| `FeePayment`       | Immutable transaction record for every payment made      |
+| `User` 👤           | Authentication entity (all roles — ADMIN, STUDENT, etc.) |
+| `StudentProfile` 🎓 | Full student record with 60+ fields                      |
+| `StudentAccount` 💰 | Tracks student fee balance and next due date             |
+| `FeePayment` 💳     | Immutable transaction record for every payment made      |
 
 ---
 
-## 📋 Business Requirements
+## 📋✅ Business Requirements
 
-### 1. 🎯 Core Endpoint
+### 1. 🎯🚀 Core Endpoint
 ```
 POST /api/{version}/one-time-fee-payment
 ```
 
-### 2. 📥 Input Requirements
-- ✅ Payment amount **greater than 0**
-- ✅ Valid **student number**
-- ✅ Payment date defaults to **current system date** if not provided
-- ✅ Stripe **payment method ID** from the frontend
-- ✅ Currency code (e.g., `XAF`, `USD`)
+### 2. 📥📝 Input Requirements
+- ✅ Payment amount **greater than 0** 💰
+- ✅ Valid **student number** 🆔
+- ✅ Payment date defaults to **current system date** 📅 if not provided
+- ✅ Stripe **payment method ID** 💳 from the frontend
+- ✅ Currency code (e.g., `XAF`, `USD`) 💱
 
-### 3. 🎁 Fee Incentive (Matching Program)
+### 3. 🎁💎 Fee Incentive (Matching Program)
 
-| Payment Amount      | Incentive Rate |
+| Payment Amount 💰     | Incentive Rate 📈 |
 |---------------------|----------------|
-| `0 < x < 100,000`   | **1%**         |
-| `100,000 ≤ x < 500,000` | **3%**     |
-| `x ≥ 500,000`       | **5%**         |
+| `0 < x < 100,000` 🟡  | **1%** 🥉       |
+| `100,000 ≤ x < 500,000` 🟠 | **3%** 🥈  |
+| `x ≥ 500,000` 🟢      | **5%** 🥇       |
 
-### 4. 📅 Next Due Date Logic
-- Next due date = **payment date + 90 days**
-- If it falls on **Saturday** → moved to **Monday (+2 days)**
-- If it falls on **Sunday** → moved to **Monday (+1 day)**
-- ✅ **No due date may fall on a weekend**
+### 4. 📅🗓️ Next Due Date Logic
+- ⏳ Next due date = **payment date + 90 days**
+- 📅 If it falls on **Saturday** → moved to **Monday (+2 days)** ➡️
+- 📅 If it falls on **Sunday** → moved to **Monday (+1 day)** ➡️
+- ✅ **No due date may fall on a weekend** 🚫📅
 
-### 5. 📤 Expected Output
-- Student Number
-- Previous Balance
-- Payment Amount
-- Incentive Rate
-- Incentive Amount
-- New Balance
-- Next Payment Due Date
-- Stripe Payment Intent ID
-- Stripe Payment Status
+### 5. 📤📊 Expected Output
+- 🆔 Student Number
+- 💰 Previous Balance
+- 💳 Payment Amount
+- 📈 Incentive Rate
+- 🎁 Incentive Amount
+- 💵 New Balance
+- 📅 Next Payment Due Date
+- 🔑 Stripe Payment Intent ID
+- ✅ Stripe Payment Status
 
 ---
 
-## 💰 Incentive Calculation Logic
+## 💰🧮 Incentive Calculation Logic
 
 ```
 incentiveAmount = paymentAmount × incentiveRate
 newBalance      = previousBalance − (paymentAmount + incentiveAmount)
 ```
 
-### Implementation — `IncentiveCalculator.java`
-> Uses `BigDecimal` with `RoundingMode.HALF_UP` to eliminate floating-point precision errors.
+### ⚙️🔢 Implementation — `IncentiveCalculator.java`
+> Uses `BigDecimal` 🔢 with `RoundingMode.HALF_UP` 🎯 to eliminate floating-point precision errors ⚠️.
 
 ```java
 // Example: paymentAmount = 100,000
-incentiveRate   = 0.03         // 3% tier
-incentiveAmount = 3,000.00
-newBalance      = 800,000 − (100,000 + 3,000) = 697,000.00
+incentiveRate   = 0.03         // 3% tier 🥈
+incentiveAmount = 3,000.00     // 🎁
+newBalance      = 800,000 − (100,000 + 3,000) = 697,000.00 // 💵
 ```
 
 ---
 
-## 📅 Next Due Date Logic
+## 📅🗓️ Next Due Date Logic
 
 ```java
 // DueDateCalculator.java
-LocalDate dueDate = paymentDate.plusDays(90);
+LocalDate dueDate = paymentDate.plusDays(90); // ⏳
 
-if (dueDate.getDayOfWeek() == SATURDAY) dueDate = dueDate.plusDays(2); // → Monday
-if (dueDate.getDayOfWeek() == SUNDAY)   dueDate = dueDate.plusDays(1); // → Monday
+if (dueDate.getDayOfWeek() == SATURDAY) dueDate = dueDate.plusDays(2); // ➡️ Monday ✅
+if (dueDate.getDayOfWeek() == SUNDAY)   dueDate = dueDate.plusDays(1); // ➡️ Monday ✅
 ```
 
 ---
 
-## 🌐 API Endpoints
+## 🌐🔗 API Endpoints
 
-### 🔐 Authentication
-| Method | Endpoint                          | Description              | Access        |
+### 🔐🔑 Authentication
+| Method ⚡ | Endpoint 🔗                         | Description 📋           | Access 🛡️     |
 |--------|-----------------------------------|--------------------------|---------------|
-| POST   | `/api/v1/auth/register`           | Register new user        | Public        |
-| POST   | `/api/v1/auth/verify-otp`         | Verify OTP               | Public        |
-| POST   | `/api/v1/auth/login`              | Login with credentials   | Public        |
-| POST   | `/api/v1/auth/logout`             | Logout (clears cookies)  | Authenticated |
-| POST   | `/api/v1/auth/magic-link/send`    | Send magic link          | Public        |
-| POST   | `/api/v1/auth/google-login`       | Login with Google/Firebase | Public      |
+| POST 📤 | `/api/v1/auth/register`           | Register new user 👤      | Public 🌍      |
+| POST 📤 | `/api/v1/auth/verify-otp`         | Verify OTP 🔢             | Public 🌍      |
+| POST 📤 | `/api/v1/auth/login`              | Login with credentials 🔑 | Public 🌍      |
+| POST 📤 | `/api/v1/auth/logout`             | Logout (clears cookies) 🚪 | Authenticated 🔐 |
+| POST 📤 | `/api/v1/auth/magic-link/send`    | Send magic link 🪄         | Public 🌍      |
+| POST 📤 | `/api/v1/auth/google-login`       | Login with Google/Firebase 🔥 | Public 🌍   |
 
-### 👩‍🎓 Student Management
-| Method | Endpoint                              | Description                      | Access         |
+### 👩‍🎓📚 Student Management
+| Method ⚡ | Endpoint 🔗                               | Description 📋                    | Access 🛡️      |
 |--------|---------------------------------------|----------------------------------|----------------|
-| POST   | `/api/v1/students`                    | Create student profile           | ADMIN          |
-| GET    | `/api/v1/students`                    | Fetch all students (paginated)   | ADMIN, TEACHER |
-| GET    | `/api/v1/students/{id}`               | Fetch student by ID              | ADMIN, TEACHER |
-| GET    | `/api/v1/students/number/{number}`    | Fetch by student number          | ADMIN, TEACHER |
-| PUT    | `/api/v1/students/{id}`               | Update student profile           | ADMIN          |
-| DELETE | `/api/v1/students/{id}`               | Soft delete student              | ADMIN          |
-| GET    | `/api/v1/students/count`              | Count active students            | ADMIN          |
-| GET    | `/api/v1/students/search`             | Search & filter (all properties) | ADMIN, TEACHER |
-| GET    | `/api/v1/students/fee-defaulters`     | List fee defaulters              | ADMIN, ACCOUNTANT |
-| GET    | `/api/v1/students/boarders`           | List boarders by hostel          | ADMIN          |
-| GET    | `/api/v1/students/scholarships`       | List scholarship students        | ADMIN, ACCOUNTANT |
+| POST 📤 | `/api/v1/students`                    | Create student profile ➕          | ADMIN 👑        |
+| GET 📥  | `/api/v1/students`                    | Fetch all students (paginated) 📄  | ADMIN 👑, TEACHER 👩‍🏫 |
+| GET 📥  | `/api/v1/students/{id}`               | Fetch student by ID 🆔             | ADMIN 👑, TEACHER 👩‍🏫 |
+| GET 📥  | `/api/v1/students/number/{number}`    | Fetch by student number 🔢         | ADMIN 👑, TEACHER 👩‍🏫 |
+| PUT 🔄  | `/api/v1/students/{id}`               | Update student profile ✏️          | ADMIN 👑        |
+| DELETE 🗑️ | `/api/v1/students/{id}`            | Soft delete student 🚫             | ADMIN 👑        |
+| GET 📥  | `/api/v1/students/count`              | Count active students 🔢           | ADMIN 👑        |
+| GET 📥  | `/api/v1/students/search`             | Search & filter (all properties) 🔍 | ADMIN 👑, TEACHER 👩‍🏫 |
+| GET 📥  | `/api/v1/students/fee-defaulters`     | List fee defaulters ⚠️             | ADMIN 👑, ACCOUNTANT 💼 |
+| GET 📥  | `/api/v1/students/boarders`           | List boarders by hostel 🏠          | ADMIN 👑        |
+| GET 📥  | `/api/v1/students/scholarships`       | List scholarship students 🎓       | ADMIN 👑, ACCOUNTANT 💼 |
 
-### 💳 Fee Payments
-| Method | Endpoint                          | Description                         | Access                      |
+### 💳💰 Fee Payments
+| Method ⚡ | Endpoint 🔗                         | Description 📋                       | Access 🛡️                    |
 |--------|-----------------------------------|-------------------------------------|-----------------------------|
-| POST   | `/api/v1/one-time-fee-payment`    | Process one-time fee payment        | ADMIN, ACCOUNTANT, STUDENT  |
+| POST 📤 | `/api/v1/one-time-fee-payment`    | Process one-time fee payment 💰      | ADMIN 👑, ACCOUNTANT 💼, STUDENT 🎓 |
 
-### 📸 Profile Pictures
-| Method | Endpoint                                      | Description              | Access |
+### 📸🖼️ Profile Pictures
+| Method ⚡ | Endpoint 🔗                                    | Description 📋            | Access 🛡️ |
 |--------|-----------------------------------------------|--------------------------|--------|
-| POST   | `/api/v1/students/{id}/profile-picture`       | Upload profile picture   | ADMIN  |
-| DELETE | `/api/v1/students/{id}/profile-picture`       | Delete profile picture   | ADMIN  |
+| POST 📤 | `/api/v1/students/{id}/profile-picture`       | Upload profile picture 📸  | ADMIN 👑 |
+| DELETE 🗑️ | `/api/v1/students/{id}/profile-picture`    | Delete profile picture 🗑️  | ADMIN 👑 |
 
-> 📖 **Full API documentation available at:** `http://localhost:8080/swagger-ui.html`
-
----
-
-## 🔐 Security & Authentication
-
-This API implements a **multi-layer authentication strategy**:
-
-### 🔑 JWT Authentication
-- Access token: **1 hour** expiry stored in `HttpOnly` cookie
-- Refresh token: **7 days** expiry stored in `HttpOnly` cookie
-- Tokens are **blacklisted in Redis** on logout
-
-### 🔥 Firebase Google Authentication
-- Supports Google Sign-In via Firebase
-- Firebase token verified server-side
-- User auto-created if first login
-
-### 📧 OTP & Magic Link
-- OTP hashed with **BCrypt** and stored in DB with expiry
-- Magic link sent via **Mailtrap** with HTML email templates
-
-### 👥 Role-Based Access Control (RBAC)
-- 27 roles supported: `ADMIN`, `SUPER_ADMIN`, `PRINCIPAL`, `ACCOUNTANT`, `CASHIER`, `STUDENT`, `TEACHER`, and more
-- Each endpoint is protected by specific role combinations
+> 📖✨ **Full API documentation available at:** `http://localhost:8080/swagger-ui.html` 🌐
 
 ---
 
-## 🗄️ Database Schema
+## 🔐🛡️ Security & Authentication
 
-### Flyway Migrations (in order)
-| Version | File                                   | Description                    |
+This API implements a **multi-layer authentication strategy** 🧱🔒:
+
+### 🔑🪙 JWT Authentication
+- 🟢 Access token: **1 hour** expiry stored in `HttpOnly` cookie 🍪
+- 🔵 Refresh token: **7 days** expiry stored in `HttpOnly` cookie 🍪
+- 🔴 Tokens are **blacklisted in Redis** on logout 🚫
+
+### 🔥☁️ Firebase Google Authentication
+- 🌐 Supports Google Sign-In via Firebase
+- ✅ Firebase token verified server-side 🖥️
+- 👤 User auto-created if first login 🆕
+
+### 📧🪄 OTP & Magic Link
+- 🔒 OTP hashed with **BCrypt** and stored in DB with expiry ⏳
+- 📬 Magic link sent via **Mailtrap** with HTML email templates 🎨
+
+### 👥🎭 Role-Based Access Control (RBAC)
+- 🏷️ 27 roles supported: `ADMIN` 👑, `SUPER_ADMIN` 🌟, `PRINCIPAL` 🎓, `ACCOUNTANT` 💼, `CASHIER` 💰, `STUDENT` 🎒, `TEACHER` 👩‍🏫, and more
+- 🔒 Each endpoint is protected by specific role combinations 🛡️
+
+---
+
+## 🗄️📊 Database Schema
+
+### 🚀📋 Flyway Migrations (in order)
+| Version 🔢 | File 📄                                  | Description 📋                 |
 |---------|----------------------------------------|--------------------------------|
-| V1      | `V1__create_users_table.sql`           | Users table + `user_role` enum |
-| V2      | `V2__create_student_profiles_table.sql`| Student profiles + all enums   |
-| V3      | `V3__create_payment_tables.sql`        | Student accounts + fee payments|
+| V1 1️⃣    | `V1__create_users_table.sql`           | Users table + `user_role` enum 👤 |
+| V2 2️⃣    | `V2__create_student_profiles_table.sql`| Student profiles + all enums 🎓  |
+| V3 3️⃣    | `V3__create_payment_tables.sql`        | Student accounts + fee payments 💳|
 
-### 💡 Money Handling
-> ⚠️ All monetary values use `NUMERIC(19, 2)` in PostgreSQL and `BigDecimal` in Java.
-> **Floating-point types (`double`, `float`) are never used for currency** to prevent precision errors.
+### 💡💰 Money Handling
+> ⚠️🔢 All monetary values use `NUMERIC(19, 2)` in PostgreSQL 🐘 and `BigDecimal` in Java ☕.
+> 🚫 **Floating-point types (`double`, `float`) are never used for currency** to prevent precision errors 🎯.
 
 ---
 
-## 💳 Stripe Payment Integration
+## 💳⚡ Stripe Payment Integration
 
-### Payment Flow
+### 💰🔄 Payment Flow
 ```
-Frontend (Angular)
+🖥️ Frontend (Angular)
     │
-    ├─ 1. Collect card details via Stripe.js Elements
-    ├─ 2. Create PaymentMethod → receive paymentMethodId
-    └─ 3. POST /one-time-fee-payment { studentNumber, paymentAmount, paymentMethodId, currency }
+    ├─ 1️⃣ Collect card details via Stripe.js Elements 💳
+    ├─ 2️⃣ Create PaymentMethod → receive paymentMethodId 🔑
+    └─ 3️⃣ POST /one-time-fee-payment { studentNumber, paymentAmount, paymentMethodId, currency } 📤
                 │
-                └─ Backend (Spring Boot)
-                        ├─ 4. Validate student + account
-                        ├─ 5. Calculate incentive + new balance
-                        ├─ 6. Calculate next due date
-                        ├─ 7. Create Stripe PaymentIntent
-                        ├─ 8. Confirm PaymentIntent with paymentMethodId
-                        ├─ 9. On success → update balance + save FeePayment record
-                        └─ 10. Return full payment response
+                └─ 🖥️ Backend (Spring Boot)
+                        ├─ 4️⃣ Validate student + account ✅
+                        ├─ 5️⃣ Calculate incentive + new balance 🧮
+                        ├─ 6️⃣ Calculate next due date 📅
+                        ├─ 7️⃣ Create Stripe PaymentIntent 💳
+                        ├─ 8️⃣ Confirm PaymentIntent with paymentMethodId 🔐
+                        ├─ 9️⃣ On success → update balance + save FeePayment record ✅💰
+                        └─ 🔟 Return full payment response 📤
 ```
 
-### Stripe Test Cards
-| Card Number          | Scenario              |
+### 🃏🧪 Stripe Test Cards
+| Card Number 💳         | Scenario 🎭              |
 |----------------------|-----------------------|
-| `4242 4242 4242 4242` | ✅ Payment succeeds   |
-| `4000 0000 0000 0002` | ❌ Payment declined   |
-| `4000 0025 0000 3155` | 🔐 Requires 3D Secure |
+| `4242 4242 4242 4242` | ✅ Payment succeeds 🎉   |
+| `4000 0000 0000 0002` | ❌ Payment declined 🚫   |
+| `4000 0025 0000 3155` | 🔐 Requires 3D Secure 🛡️ |
 
 ---
 
-## 🚀 Getting Started
+## 🚀🏁 Getting Started
 
-### Prerequisites
+### 📋✅ Prerequisites
 - ☕ Java 21+
 - 🐘 PostgreSQL 15+
-- 🔴 Redis (via WSL on Windows or Docker)
+- 🔴 Redis (via WSL on Windows or Docker 🐳)
 - 🐳 Docker & Docker Compose (optional)
-- 🔑 Stripe account (test mode)
-- ☁️ Cloudinary account
+- 🔑 Stripe account (test mode) 💳
+- ☁️ Cloudinary account 📸
 - 🔥 Firebase project
-- 📧 Mailtrap account
+- 📧 Mailtrap account 📬
 
-### 1. Clone the Repository
+### 1️⃣ Clone the Repository 📦
 ```bash
 git clone https://github.com/asohyannick/studentFeeOneTimePayment.git
 cd studentFeeOneTimePayment
 ```
 
-### 2. Configure Environment Variables
-Create a `.env` file in the project root (see [Environment Variables](#-environment-variables) section).
+### 2️⃣ Configure Environment Variables ⚙️
+Create a `.env` file in the project root (see [Environment Variables](#-environment-variables) section) 📄.
 
-### 3. Start Redis (WSL)
+### 3️⃣ Start Redis (WSL) 🔴
 ```bash
-# In WSL terminal
+# In WSL terminal 💻
 sudo service redis-server start
 
-# Verify Redis is running
-redis-cli -a yourpassword ping  # Should return PONG
+# Verify Redis is running ✅
+redis-cli -a yourpassword ping  # Should return PONG 🏓
 ```
 
-### 4. Run the Application
+### 4️⃣ Run the Application ▶️
 ```bash
-# Build and run
+# Build and run 🔨▶️
 mvn clean install
 mvn spring-boot:run
 
-# Or with a specific profile
+# Or with a specific profile 🎯
 mvn spring-boot:run -Dspring-boot.run.profiles=dev
 ```
 
-### 5. Access Swagger UI
+### 5️⃣ Access Swagger UI 📖
 ```
-http://localhost:8080/swagger-ui.html
+http://localhost:8080/swagger-ui.html 🌐
 ```
 
 ---
 
-## ⚙️ Environment Variables
+## ⚙️🔧 Environment Variables
 
-Create a `.env` file or set these in `application-dev.yml`:
+Create a `.env` file or set these in `application-dev.yml` 📄:
 
 ```env
-# ─── Application ──────────────────────────────────────────
+# ─── 🚀 Application ──────────────────────────────────────
 APP_NAME=studentFeeOneTimePayment
 SPRING_PROFILES_ACTIVE=dev
 PORT=8080
 API_VERSION=v1
 
-# ─── Database ─────────────────────────────────────────────
+# ─── 🗄️ Database ─────────────────────────────────────────
 DATABASE_PORT=5432
 DATABASE_NAME=student_fee_db
 DATABASE_USER=postgres
 DATABASE_PASSWORD=yourpassword
 
-# ─── Redis ────────────────────────────────────────────────
+# ─── 🔴 Redis ────────────────────────────────────────────
 REDIS_HOST=127.0.0.1
 REDIS_PORT=6379
 REDIS_PASSWORD=yourredispassword
 REDIS_TTL_MINUTES=30
 
-# ─── JWT ──────────────────────────────────────────────────
+# ─── 🔐 JWT ──────────────────────────────────────────────
 JWT_SECRET_KEY=your-256-bit-secret-key-here
 JWT_ACCESS_TOKEN_EXPIRATION_MS=3600000
 JWT_REFRESH_TOKEN_EXPIRATION_MS=604800000
 
-# ─── Stripe ───────────────────────────────────────────────
+# ─── 💳 Stripe ───────────────────────────────────────────
 STRIPE_API_KEY=sk_test_your_stripe_secret_key
 
-# ─── Cloudinary ───────────────────────────────────────────
+# ─── ☁️ Cloudinary ───────────────────────────────────────
 CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
 
-# ─── Mailtrap ─────────────────────────────────────────────
+# ─── 📧 Mailtrap ─────────────────────────────────────────
 MAILTRAP_API_TOKEN=your_mailtrap_token
 MAIL_FROM=noreply@leedtech.com
 MAIL_FROM_NAME=LeedTech
 
-# ─── Firebase ─────────────────────────────────────────────
+# ─── 🔥 Firebase ─────────────────────────────────────────
 FIREBASE_PROJECT_ID=your_project_id
 FIREBASE_PRIVATE_KEY_ID=your_key_id
 FIREBASE_PRIVATE_KEY=your_private_key
 FIREBASE_CLIENT_EMAIL=your_service_account_email
 FIREBASE_CLIENT_ID=your_client_id
 
-# ─── CORS ─────────────────────────────────────────────────
+# ─── 🌐 CORS ─────────────────────────────────────────────
 FRONTEND_DOMAINS=http://localhost:4200
 ALLOWED_METHODS=GET,POST,PUT,DELETE,OPTIONS
 
-# ─── Seeder (one per role) ────────────────────────────────
+# ─── 🌱 Seeder (one per role) ────────────────────────────
 SEED_ADMIN_EMAIL=admin@leedtech.com
 SEED_ADMIN_PASSWORD=Admin@123456
 SEED_STUDENT_EMAIL=student@leedtech.com
 SEED_STUDENT_PASSWORD=Student@123456
-# ... (27 total, one per role)
+# ... (27 total, one per role) 🔢
 ```
 
 ---
 
-## 🐳 Running with Docker
+## 🐳📦 Running with Docker
 
 ```yaml
-# docker-compose.yml
+# docker-compose.yml 🐳
 version: '3.8'
 services:
 
-  app:
+  app: 🚀
     build: .
     ports:
       - "8080:8080"
@@ -414,7 +414,7 @@ services:
       - postgres
       - redis
 
-  postgres:
+  postgres: 🐘
     image: postgres:15
     environment:
       POSTGRES_DB: student_fee_db
@@ -425,228 +425,228 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
-  redis:
+  redis: 🔴
     image: redis:7-alpine
     command: redis-server --requirepass yourredispassword
     ports:
       - "6379:6379"
 
 volumes:
-  postgres_data:
+  postgres_data: 💾
 ```
 
 ```bash
-# Build and start all services
+# 🔨 Build and start all services
 docker-compose up --build
 
-# Run in background
+# 🌙 Run in background
 docker-compose up -d
 
-# Stop all services
+# 🛑 Stop all services
 docker-compose down
 ```
 
 ---
 
-## 🧪 Running Tests
+## 🧪🔬 Running Tests
 
 ```bash
-# Run all tests
+# 🧪 Run all tests
 mvn test
 
-# Run specific test class
+# 🎯 Run specific test class
 mvn test -Dtest=IncentiveCalculatorTest
 
-# Run with coverage report
+# 📊 Run with coverage report
 mvn verify
 
-# View coverage report
+# 👀 View coverage report
 open target/site/jacoco/index.html
 ```
 
-### Test Coverage Areas
+### 📊✅ Test Coverage Areas
 
-| Test Class                    | What It Tests                                    |
+| Test Class 🧪                  | What It Tests 🔍                                    |
 |-------------------------------|--------------------------------------------------|
-| `IncentiveCalculatorTest`     | All 3 tier rates, boundary values (99999, 100000, 499999, 500000) |
-| `DueDateCalculatorTest`       | Weekday, Saturday, Sunday adjustments            |
-| `FeePaymentServiceTest`       | Full payment flow, invalid inputs, insufficient balance |
-| `StudentProfileServiceTest`   | CRUD operations, duplicate checks                |
-| `StudentControllerTest`       | HTTP status codes, request validation            |
-| `FeePaymentControllerTest`    | Payment endpoint, Stripe mock integration        |
+| `IncentiveCalculatorTest` 🧮   | All 3 tier rates 📈, boundary values (99999, 100000, 499999, 500000) 🎯 |
+| `DueDateCalculatorTest` 📅     | Weekday ✅, Saturday 🟡, Sunday 🔴 adjustments     |
+| `FeePaymentServiceTest` 💳     | Full payment flow 🔄, invalid inputs ❌, insufficient balance ⚠️ |
+| `StudentProfileServiceTest` 🎓 | CRUD operations ♻️, duplicate checks 🔍           |
+| `StudentControllerTest` 🌐     | HTTP status codes 🔢, request validation ✅        |
+| `FeePaymentControllerTest` 💰  | Payment endpoint 🔗, Stripe mock integration 💳   |
 
 ---
 
-## 📊 Example Scenarios
+## 📊🎭 Example Scenarios
 
-### Example 1 — Standard Weekday Due Date
+### 🔵 Example 1 — Standard Weekday Due Date
 ```
-Initial Balance : 800,000
-Payment Amount  : 100,000
-Payment Date    : March 14, 2026 (Saturday)
-Match Tier      : 3%  (100K ≤ x < 500K)
+💰 Initial Balance : 800,000
+💳 Payment Amount  : 100,000
+📅 Payment Date    : March 14, 2026 (Saturday)
+🥈 Match Tier      : 3%  (100K ≤ x < 500K)
 
-Incentive       = 100,000 × 0.03 = 3,000
-New Balance     = 800,000 − (100,000 + 3,000) = 697,000
-Due Date        = March 14 + 90 days = June 12, 2026 ✅ (Friday — no adjustment)
-```
-
-### Example 2 — Weekend Due Date Adjustment
-```
-Initial Balance : 800,000
-Payment Amount  : 575,000
-Payment Date    : April 5, 2026 (Sunday)
-Match Tier      : 5%  (x ≥ 500K)
-
-Incentive       = 575,000 × 0.05 = 28,750
-New Balance     = 800,000 − (575,000 + 28,750) = 196,250
-Due Date        = April 5 + 90 days = July 4, 2026 (Saturday → adjusted to July 6, 2026 ✅ Monday)
+🎁 Incentive       = 100,000 × 0.03 = 3,000
+💵 New Balance     = 800,000 − (100,000 + 3,000) = 697,000
+📅 Due Date        = March 14 + 90 days = June 12, 2026 ✅ (Friday — no adjustment)
 ```
 
-### Example 3 — Low Tier
+### 🟠 Example 2 — Weekend Due Date Adjustment
 ```
-Initial Balance : 200,000
-Payment Amount  : 50,000
-Payment Date    : March 13, 2026
-Match Tier      : 1%  (0 < x < 100K)
+💰 Initial Balance : 800,000
+💳 Payment Amount  : 575,000
+📅 Payment Date    : April 5, 2026 (Sunday)
+🥇 Match Tier      : 5%  (x ≥ 500K)
 
-Incentive       = 50,000 × 0.01 = 500
-New Balance     = 200,000 − (50,000 + 500) = 149,500
-Due Date        = March 13 + 90 days = June 11, 2026 ✅ (Thursday — no adjustment)
+🎁 Incentive       = 575,000 × 0.05 = 28,750
+💵 New Balance     = 800,000 − (575,000 + 28,750) = 196,250
+📅 Due Date        = April 5 + 90 days = July 4, 2026 (Saturday ➡️ adjusted to July 6, 2026 ✅ Monday)
+```
+
+### 🟡 Example 3 — Low Tier
+```
+💰 Initial Balance : 200,000
+💳 Payment Amount  : 50,000
+📅 Payment Date    : March 13, 2026
+🥉 Match Tier      : 1%  (0 < x < 100K)
+
+🎁 Incentive       = 50,000 × 0.01 = 500
+💵 New Balance     = 200,000 − (50,000 + 500) = 149,500
+📅 Due Date        = March 13 + 90 days = June 11, 2026 ✅ (Thursday — no adjustment)
 ```
 
 ---
 
-## 🔍 Edge Cases Handled
+## 🔍🛠️ Edge Cases Handled
 
-| Edge Case                         | Handling                                              |
+| Edge Case ⚠️                       | Handling 🛡️                                             |
 |-----------------------------------|-------------------------------------------------------|
-| `paymentAmount = 0`               | ❌ Rejected — `@DecimalMin("0.01")` validation        |
-| `paymentAmount < 0`               | ❌ Rejected — validation                              |
-| `paymentAmount > currentBalance`  | ❌ Rejected — service-level check                     |
-| `paymentAmount = 99,999.99`       | ✅ 1% tier (just below 100K boundary)                 |
-| `paymentAmount = 100,000.00`      | ✅ 3% tier (exactly at boundary)                      |
-| `paymentAmount = 499,999.99`      | ✅ 3% tier (just below 500K boundary)                 |
-| `paymentAmount = 500,000.00`      | ✅ 5% tier (exactly at boundary)                      |
-| Due date on Saturday              | ✅ Moved to Monday (+2 days)                          |
-| Due date on Sunday                | ✅ Moved to Monday (+1 day)                           |
-| Student not found                 | ❌ `404 NotFoundException`                            |
-| Account not found                 | ❌ `404 NotFoundException`                            |
-| Stripe payment fails              | ❌ `400 BadRequestException` — balance not updated    |
-| Duplicate student number          | ❌ `400 BadRequestException`                          |
-| Invalid JWT token                 | ❌ `401 Unauthorized`                                 |
-| Insufficient role                 | ❌ `403 Forbidden`                                    |
-| Profile picture > 5MB             | ❌ `400 BadRequestException`                          |
-| Invalid image format              | ❌ Only JPEG, PNG, WEBP allowed                       |
+| `paymentAmount = 0` 🚫             | ❌ Rejected — `@DecimalMin("0.01")` validation ✅       |
+| `paymentAmount < 0` ➖              | ❌ Rejected — validation 🛡️                            |
+| `paymentAmount > currentBalance` ⬆️ | ❌ Rejected — service-level check 🔍                  |
+| `paymentAmount = 99,999.99` 🟡     | ✅ 1% tier 🥉 (just below 100K boundary)               |
+| `paymentAmount = 100,000.00` 🟠    | ✅ 3% tier 🥈 (exactly at boundary)                    |
+| `paymentAmount = 499,999.99` 🟠    | ✅ 3% tier 🥈 (just below 500K boundary)               |
+| `paymentAmount = 500,000.00` 🟢    | ✅ 5% tier 🥇 (exactly at boundary)                    |
+| Due date on Saturday 📅            | ✅ Moved to Monday ➡️ (+2 days)                        |
+| Due date on Sunday 📅              | ✅ Moved to Monday ➡️ (+1 day)                         |
+| Student not found 👤               | ❌ `404 NotFoundException` 🚫                           |
+| Account not found 💰               | ❌ `404 NotFoundException` 🚫                           |
+| Stripe payment fails 💳            | ❌ `400 BadRequestException` — balance not updated 🔒  |
+| Duplicate student number 🔢        | ❌ `400 BadRequestException` 🚫                         |
+| Invalid JWT token 🔑               | ❌ `401 Unauthorized` 🚨                                |
+| Insufficient role 🛡️              | ❌ `403 Forbidden` 🚫                                   |
+| Profile picture > 5MB 📸           | ❌ `400 BadRequestException` ⚠️                         |
+| Invalid image format 🖼️           | ❌ Only JPEG, PNG, WEBP allowed ✅                      |
 
 ---
 
-## 💭 Assumptions & Trade-offs
+## 💭🧠 Assumptions & Trade-offs
 
-### Assumptions
-1. **Currency**: The system accepts any valid ISO 4217 currency code. Stripe handles conversion.
-2. **Balance cannot go negative**: A payment exceeding the current balance is rejected.
-3. **Payment date**: Defaults to the current system date if not provided by the caller.
-4. **Incentive tiers**: Applied on the raw `paymentAmount`, not on the total deduction.
-5. **Soft deletes**: Student profiles are never hard deleted — `isDeleted` flag is used.
-6. **Seeded users**: On startup, the `SeederConfig` creates one user per role if they don't exist.
+### 📌 Assumptions
+1. 💱 **Currency**: The system accepts any valid ISO 4217 currency code. Stripe handles conversion.
+2. ⚠️ **Balance cannot go negative**: A payment exceeding the current balance is rejected.
+3. 📅 **Payment date**: Defaults to the current system date if not provided by the caller.
+4. 📊 **Incentive tiers**: Applied on the raw `paymentAmount`, not on the total deduction.
+5. 🗑️ **Soft deletes**: Student profiles are never hard deleted — `isDeleted` flag is used.
+6. 🌱 **Seeded users**: On startup, the `SeederConfig` creates one user per role if they don't exist.
 
-### Trade-offs
-| Decision                         | Rationale                                                    |
+### ⚖️ Trade-offs
+| Decision 🔧                          | Rationale 💡                                                 |
 |----------------------------------|--------------------------------------------------------------|
-| `BigDecimal` over `double`       | Eliminates floating-point rounding errors in money calculations |
-| Soft delete for student profiles | Preserves historical payment data and audit trails           |
-| Separate `StudentAccount` entity | Decouples financial data from profile data — easier to extend |
-| `JpaSpecificationExecutor`       | Replaces 20+ query methods with a single dynamic `findAll(spec, pageable)` |
-| `disableBuilder = true` in MapStruct | Avoids Lombok `@Builder` vs MapStruct naming conflicts for `boolean isX` fields |
-| Redis for token blacklisting     | Stateless JWT + server-side invalidation on logout           |
-| Firebase credentials from env vars | Avoids committing service account JSON to version control  |
-| `cloudinary-http5` over `cloudinary-core` | `core` alone has no HTTP adapter and fails on startup  |
+| `BigDecimal` over `double` 🔢     | Eliminates floating-point rounding errors in money calculations 💰 |
+| Soft delete for student profiles 🗑️ | Preserves historical payment data and audit trails 📋       |
+| Separate `StudentAccount` entity 🏦 | Decouples financial data from profile data — easier to extend 🔧 |
+| `JpaSpecificationExecutor` 🔍     | Replaces 20+ query methods with a single dynamic `findAll(spec, pageable)` ⚡ |
+| `disableBuilder = true` in MapStruct 🗺️ | Avoids Lombok `@Builder` vs MapStruct naming conflicts for `boolean isX` fields 🛡️ |
+| Redis for token blacklisting 🔴   | Stateless JWT + server-side invalidation on logout 🚪        |
+| Firebase credentials from env vars 🔥 | Avoids committing service account JSON to version control 🔐 |
+| `cloudinary-http5` over `cloudinary-core` ☁️ | `core` alone has no HTTP adapter and fails on startup 🚫 |
 
 ---
 
-## 📁 Project Structure
+## 📁🗂️ Project Structure
 
 ```
-studentFeeOneTimePayment/
-├── src/
-│   ├── main/
+studentFeeOneTimePayment/ 📦
+├── src/ 📂
+│   ├── main/ 🚀
 │   │   ├── java/com/leedTech/studentFeeOneTimePayment/
-│   │   │   ├── config/
-│   │   │   │   ├── cloudinaryConfig/       # Cloudinary bean
-│   │   │   │   ├── customResponseMessage/  # Generic API response wrapper
-│   │   │   │   ├── emailConfig/            # Mailtrap email templates
-│   │   │   │   ├── firebaseConfig/         # Firebase Admin SDK
-│   │   │   │   ├── jwtConfig/              # JWT generation & validation
-│   │   │   │   ├── securityConfig/         # Spring Security filter chain
-│   │   │   │   └── swaggerConfig/          # OpenAPI / Swagger setup
-│   │   │   ├── constant/                   # Enums (UserRole, Gender, etc.)
-│   │   │   ├── controller/
-│   │   │   │   ├── authController/
-│   │   │   │   ├── studentController/
-│   │   │   │   └── feePaymentController/
-│   │   │   ├── dto/
-│   │   │   │   ├── auth/
-│   │   │   │   ├── studentProfile/
-│   │   │   │   └── payment/
-│   │   │   ├── entity/
-│   │   │   │   ├── user/
-│   │   │   │   ├── studentProfile/
-│   │   │   │   ├── studentAccount/
-│   │   │   │   └── feePayment/
-│   │   │   ├── exception/                  # Custom exceptions + global handler
-│   │   │   ├── filter/                     # JWT & Firebase auth filters
-│   │   │   ├── mapper/                     # MapStruct mappers
-│   │   │   ├── repository/
-│   │   │   │   ├── userRepository/
-│   │   │   │   ├── studentProfileRepository/
-│   │   │   │   ├── studentAccountRepository/
-│   │   │   │   └── feePaymentRepository/
-│   │   │   ├── service/
-│   │   │   │   ├── studentService/
-│   │   │   │   ├── feePaymentService/
-│   │   │   │   ├── stripeService/
-│   │   │   │   └── profilePictureService/
-│   │   │   ├── specification/              # JPA Specifications for dynamic queries
-│   │   │   └── util/
-│   │   │       ├── IncentiveCalculator.java
-│   │   │       └── DueDateCalculator.java
-│   │   └── resources/
-│   │       ├── db/migration/               # Flyway SQL migrations (V1, V2, V3)
-│   │       ├── application.yml
-│   │       ├── application-dev.yml
-│   │       └── application-prod.yml
-│   └── test/
+│   │   │   ├── config/ ⚙️
+│   │   │   │   ├── cloudinaryConfig/       # ☁️ Cloudinary bean
+│   │   │   │   ├── customResponseMessage/  # 📨 Generic API response wrapper
+│   │   │   │   ├── emailConfig/            # 📧 Mailtrap email templates
+│   │   │   │   ├── firebaseConfig/         # 🔥 Firebase Admin SDK
+│   │   │   │   ├── jwtConfig/              # 🔐 JWT generation & validation
+│   │   │   │   ├── securityConfig/         # 🛡️ Spring Security filter chain
+│   │   │   │   └── swaggerConfig/          # 📖 OpenAPI / Swagger setup
+│   │   │   ├── constant/ 🏷️               # Enums (UserRole, Gender, etc.)
+│   │   │   ├── controller/ 🌐
+│   │   │   │   ├── authController/ 🔐
+│   │   │   │   ├── studentController/ 🎓
+│   │   │   │   └── feePaymentController/ 💳
+│   │   │   ├── dto/ 📋
+│   │   │   │   ├── auth/ 🔑
+│   │   │   │   ├── studentProfile/ 👤
+│   │   │   │   └── payment/ 💰
+│   │   │   ├── entity/ 🧬
+│   │   │   │   ├── user/ 👤
+│   │   │   │   ├── studentProfile/ 🎓
+│   │   │   │   ├── studentAccount/ 💰
+│   │   │   │   └── feePayment/ 💳
+│   │   │   ├── exception/ ⚠️              # Custom exceptions + global handler
+│   │   │   ├── filter/ 🔍                 # JWT & Firebase auth filters
+│   │   │   ├── mapper/ 🗺️                # MapStruct mappers
+│   │   │   ├── repository/ 🗃️
+│   │   │   │   ├── userRepository/ 👤
+│   │   │   │   ├── studentProfileRepository/ 🎓
+│   │   │   │   ├── studentAccountRepository/ 💰
+│   │   │   │   └── feePaymentRepository/ 💳
+│   │   │   ├── service/ ⚙️
+│   │   │   │   ├── studentService/ 🎓
+│   │   │   │   ├── feePaymentService/ 💰
+│   │   │   │   ├── stripeService/ 💳
+│   │   │   │   └── profilePictureService/ 📸
+│   │   │   ├── specification/ 🔍          # JPA Specifications for dynamic queries
+│   │   │   └── util/ 🛠️
+│   │   │       ├── IncentiveCalculator.java 🧮
+│   │   │       └── DueDateCalculator.java 📅
+│   │   └── resources/ 📂
+│   │       ├── db/migration/ 🚀           # Flyway SQL migrations (V1, V2, V3)
+│   │       ├── application.yml ⚙️
+│   │       ├── application-dev.yml 🛠️
+│   │       └── application-prod.yml 🏭
+│   └── test/ 🧪
 │       └── java/com/leedTech/studentFeeOneTimePayment/
-│           ├── util/
-│           │   ├── IncentiveCalculatorTest.java
-│           │   └── DueDateCalculatorTest.java
-│           ├── service/
-│           │   ├── FeePaymentServiceTest.java
-│           │   └── StudentServiceTest.java
-│           └── controller/
-│               ├── FeePaymentControllerTest.java
-│               └── StudentControllerTest.java
-├── docker-compose.yml
-├── Dockerfile
-├── pom.xml
-└── README.md
+│           ├── util/ 🛠️
+│           │   ├── IncentiveCalculatorTest.java 🧮
+│           │   └── DueDateCalculatorTest.java 📅
+│           ├── service/ ⚙️
+│           │   ├── FeePaymentServiceTest.java 💳
+│           │   └── StudentServiceTest.java 🎓
+│           └── controller/ 🌐
+│               ├── FeePaymentControllerTest.java 💰
+│               └── StudentControllerTest.java 👤
+├── docker-compose.yml 🐳
+├── Dockerfile 📄
+├── pom.xml 🔨
+└── README.md 📖
 ```
 
 ---
 
-## 📜 License
+## 📜⚖️ License
 
-This project was created as part of a **LeedTech Full Stack Engineering Interview Exercise**.
+This project was created as part of a **LeedTech Full Stack Engineering Interview Exercise** 🎓💼.
 
 ---
 
 <div align="center">
 
-**Built with ❤️ by Asoh Yannick**
+### 💖✨ Built with ❤️ by Asoh Yannick 👨‍💻🚀
 
-*Java Developer · Spring Boot Enthusiast · Docker Advocate · Spring AI Explorer*
+*☕ Java Developer · 🌱 Spring Boot Enthusiast · 🐳 Docker Advocate · 🤖 Spring AI Explorer*
 
-⭐ If you found this helpful, give it a star!
+⭐🌟 If you found this helpful, give it a star! 🌟⭐
 
 </div>

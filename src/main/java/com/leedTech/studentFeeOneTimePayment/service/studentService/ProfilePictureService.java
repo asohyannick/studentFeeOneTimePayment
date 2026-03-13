@@ -26,7 +26,7 @@ public class ProfilePictureService {
 private final Cloudinary                cloudinary;
 private final StudentProfileRepository studentProfileRepository;
 
-private static final long       MAX_FILE_SIZE   = 5 * 1024 * 1024; // 5MB
+private static final long   MAX_FILE_SIZE   = 5 * 1024 * 1024; // 5MB
 private static final List<String> ALLOWED_TYPES = Arrays.asList(
 		"image/jpeg", "image/png", "image/webp", "image/jpg"
 );
@@ -69,7 +69,6 @@ public String uploadProfilePicture(UUID studentProfileId, MultipartFile file) {
 	}
 }
 
-// ─── Delete Profile Picture ──────────────────────────────────────
 
 @Transactional
 public void deleteProfilePicture(UUID studentProfileId) {

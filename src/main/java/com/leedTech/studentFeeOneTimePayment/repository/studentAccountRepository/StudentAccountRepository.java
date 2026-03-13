@@ -7,10 +7,5 @@ import java.util.Optional;
 import java.util.UUID;
 @Repository
 public interface StudentAccountRepository extends JpaRepository<StudentAccount, UUID> {
-
 Optional<StudentAccount> findByStudentProfile(StudentProfile studentProfile);
-
-Optional<StudentAccount> findByStudentProfile_StudentNumber(String studentNumber);
-
-boolean existsByStudentProfile(StudentProfile studentProfile);
 }

@@ -23,6 +23,9 @@ private long accessTokenExpirationMs;
 @Value("${jwt.refresh-token-expiration-ms}")
 private long refreshTokenExpirationMs;
 
+@Value("${jwt.magic-link-expiration-ms}")
+private long magicLinkExpirationMs;
+
 private static final String ROLE_CLAIM      = "role";
 private static final String TOKEN_TYPE_CLAIM = "tokenType";
 private static final String ACCESS_TOKEN     = "ACCESS";
@@ -110,5 +113,49 @@ public long getAccessTokenExpirationSeconds() {
 
 public long getRefreshTokenExpirationSeconds() {
 	return refreshTokenExpirationMs / 1000;
+}
+
+public String generateMagicLinkToken(String email) {
+	return Jwts.builder()
+			       .subject(email)
+			       .claim("type", "magic-link")
+			       .issuedAt(new Date())
+			       .expiration(new Date(System.currentTimeMillis() + magicLinkExpirationMs))
+			       .signWith(getSigningKey())
+			       .compact();
+}
+
+public String extractEmailFromMagicLinkToken(String token) {
+	return Jwts.parser()
+			       .verifyWith(getSigningKey())
+			       .build()
+			       .parseSignedClaims(token)
+			       .getPayload()
+			       .getSubject();
+}
+
+public boolean isMagicLinkToken(String token) {
+	try {
+		Claims claims = Jwts.parser()
+				                .verifyWith(getSigningKey())
+				                .build()
+				                .parseSignedClaims(token)
+				                .getPayload();
+		return "magic-link".equals(claims.get("type", String.class));
+	} catch (JwtException e) {
+		return false;
+	}
+}
+
+public boolean isMagicLinkTokenValid(String token) {
+	try {
+		Jwts.parser()
+				.verifyWith(getSigningKey())
+				.build()
+				.parseSignedClaims(token);
+		return isMagicLinkToken(token);
+	} catch (JwtException | IllegalArgumentException e) {
+		return false;
+	}
 }
 }

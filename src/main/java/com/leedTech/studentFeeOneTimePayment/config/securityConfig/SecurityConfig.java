@@ -86,8 +86,7 @@ public AccessDeniedHandler accessDeniedHandler() {
 				Instant.now(),
 				"Access denied",
 				"You do not have permission to access this resource",
-				HttpStatus.FORBIDDEN.value(),
-				HttpStatus.FORBIDDEN.name(),
+				HttpStatus.FORBIDDEN.value (),
 				"FORBIDDEN",
 				request.getRequestURI(),
 				request.getMethod()
@@ -115,7 +114,6 @@ public AuthenticationEntryPoint authenticationEntryPoint() {
 				"Unauthorized",
 				"Authentication is required to access this resource",
 				HttpStatus.UNAUTHORIZED.value(),
-				HttpStatus.UNAUTHORIZED.name(),
 				"UNAUTHORIZED",
 				request.getRequestURI(),
 				request.getMethod()
@@ -187,6 +185,10 @@ public SecurityFilterChain securityFilterChain( HttpSecurity http) throws Except
 							"ADMIN", "SUPER_ADMIN", "ACCOUNTANT", "PRINCIPAL",
 							"SCHOOL_DIRECTOR", "SECRETARY"
 					)
+					                               .requestMatchers(HttpMethod.PATCH, "/api/" + apiVersion + "/auth/students/*/block")
+					                               .hasAnyRole("ADMIN", "SUPER_ADMIN", "PRINCIPAL")
+					                               .requestMatchers(HttpMethod.PATCH, "/api/" + apiVersion + "/auth/students/*/unblock")
+					                               .hasAnyRole("ADMIN", "SUPER_ADMIN", "PRINCIPAL")
 					                               
 					                               .anyRequest().authenticated()
 			)

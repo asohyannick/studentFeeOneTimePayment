@@ -16,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SeederConfig implements ApplicationRunner {
 
-private final UserRepository        userRepository;
+private final UserRepository userRepository;
 private final BCryptPasswordEncoder passwordEncoder;
 
 @Value("${seed.admin.email}")             private String adminEmail;
@@ -100,12 +100,19 @@ private final BCryptPasswordEncoder passwordEncoder;
 @Value("${seed.guest.email}")             private String guestEmail;
 @Value("${seed.guest.password}")          private String guestPassword;
 
+private record SeedUser(
+		String   firstName,
+		String   lastName,
+		String   email,
+		String   password,
+		UserRole role
+) {}
+
 @Override
 public void run(ApplicationArguments args) {
 	log.info("Running database seeder...");
 	
 	List<SeedUser> seedUsers = List.of(
-			// Management
 			new SeedUser("Admin",             "LeedTech",   adminEmail,             adminPassword,             UserRole.ADMIN),
 			new SeedUser("Super",             "Admin",      superAdminEmail,         superAdminPassword,        UserRole.SUPER_ADMIN),
 			new SeedUser("John",              "Principal",  principalEmail,          principalPassword,         UserRole.PRINCIPAL),
@@ -162,11 +169,4 @@ public void run(ApplicationArguments args) {
 	log.info("Seeder completed. {} new user(s) seeded.", seeded);
 }
 
-private record SeedUser(
-		String   firstName,
-		String   lastName,
-		String   email,
-		String   password,
-		UserRole role
-) {}
 }
