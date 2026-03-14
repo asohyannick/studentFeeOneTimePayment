@@ -1,11 +1,9 @@
 package com.leedTech.studentFeeOneTimePayment.controller.studentController;
-
 import com.leedTech.studentFeeOneTimePayment.config.customResponseMessage.CustomResponseMessage;
 import com.leedTech.studentFeeOneTimePayment.constant.EnrollmentStatus;
 import com.leedTech.studentFeeOneTimePayment.constant.Gender;
 import com.leedTech.studentFeeOneTimePayment.dto.studentProfile.StudentProfileRequestDto;
 import com.leedTech.studentFeeOneTimePayment.dto.studentProfile.StudentProfileResponseDto;
-import com.leedTech.studentFeeOneTimePayment.dto.studentProfile.StudentProfileSummaryDto;
 import com.leedTech.studentFeeOneTimePayment.service.studentService.StudentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -19,7 +17,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 import java.util.UUID;
 @RestController
@@ -41,12 +38,11 @@ private final StudentService studentService;
 		@ApiResponse(responseCode = "401", description = "Unauthorized"),
 		@ApiResponse(responseCode = "403", description = "Forbidden")
 })
-@PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+@PostMapping(value = "/create-profile", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 public ResponseEntity<CustomResponseMessage<StudentProfileResponseDto>> createStudentProfile(
-		@Valid @ModelAttribute StudentProfileRequestDto request,
-		@RequestParam(value = "profilePicture", required = false) MultipartFile profilePicture
+		@Valid @ModelAttribute StudentProfileRequestDto request
 ) {
-	StudentProfileResponseDto data = studentService.createStudentProfile(request, profilePicture);
+	StudentProfileResponseDto data = studentService.createStudentProfile(request);
 	return ResponseEntity.status(HttpStatus.CREATED).body(
 			new CustomResponseMessage<>(
 					"Student profile created successfully.",
@@ -65,8 +61,8 @@ public ResponseEntity<CustomResponseMessage<StudentProfileResponseDto>> createSt
 		@ApiResponse(responseCode = "401", description = "Unauthorized"),
 		@ApiResponse(responseCode = "403", description = "Forbidden")
 })
-@GetMapping
-public ResponseEntity<CustomResponseMessage<Page<StudentProfileSummaryDto>>> fetchAllStudents(
+@GetMapping("/fetch-student-profiles")
+public ResponseEntity<CustomResponseMessage<Page<StudentProfileResponseDto>>> fetchAllStudents(
 		@Parameter(description = "Page number (0-based)", example = "0")
 		@RequestParam(defaultValue = "0") int page,
 		
@@ -79,58 +75,12 @@ public ResponseEntity<CustomResponseMessage<Page<StudentProfileSummaryDto>>> fet
 		@Parameter(description = "Sort direction: asc or desc", example = "desc")
 		@RequestParam(defaultValue = "desc") String sortDir
 ) {
-	Page<StudentProfileSummaryDto> data = studentService.fetchAllStudents(page, size, sortBy, sortDir);
+	Page<StudentProfileResponseDto> data = studentService.fetchAllStudents(page, size, sortBy, sortDir);
 	return ResponseEntity.ok(
 			new CustomResponseMessage<>(
 					data.isEmpty()
 							? "No student profiles found."
 							: data.getTotalElements() + " student profile(s) retrieved successfully.",
-					HttpStatus.OK.value(),
-					data
-			)
-	);
-}
-
-@Operation(
-		summary = "Fetch student profile by ID",
-		description = "Returns the full details of a single student profile by its UUID"
-)
-@ApiResponses({
-		@ApiResponse(responseCode = "200", description = "Student profile fetched successfully"),
-		@ApiResponse(responseCode = "404", description = "Student profile not found"),
-		@ApiResponse(responseCode = "401", description = "Unauthorized")
-})
-@GetMapping("/{studentProfileId}")
-public ResponseEntity<CustomResponseMessage<StudentProfileResponseDto>> fetchStudentById(
-		@PathVariable UUID studentProfileId
-) {
-	StudentProfileResponseDto data = studentService.fetchStudentById(studentProfileId);
-	return ResponseEntity.ok(
-			new CustomResponseMessage<>(
-					"Student profile retrieved successfully.",
-					HttpStatus.OK.value(),
-					data
-			)
-	);
-}
-
-@Operation(
-		summary = "Fetch student profile by student number",
-		description = "Returns the full details of a student profile by their unique student number"
-)
-@ApiResponses({
-		@ApiResponse(responseCode = "200", description = "Student profile fetched successfully"),
-		@ApiResponse(responseCode = "404", description = "Student profile not found"),
-		@ApiResponse(responseCode = "401", description = "Unauthorized")
-})
-@GetMapping("/number/{studentNumber}")
-public ResponseEntity<CustomResponseMessage<StudentProfileResponseDto>> fetchStudentByStudentNumber(
-		@PathVariable String studentNumber
-) {
-	StudentProfileResponseDto data = studentService.fetchStudentByStudentNumber(studentNumber);
-	return ResponseEntity.ok(
-			new CustomResponseMessage<>(
-					"Student profile retrieved successfully.",
 					HttpStatus.OK.value(),
 					data
 			)
@@ -148,14 +98,13 @@ public ResponseEntity<CustomResponseMessage<StudentProfileResponseDto>> fetchStu
 		@ApiResponse(responseCode = "401", description = "Unauthorized"),
 		@ApiResponse(responseCode = "403", description = "Forbidden")
 })
-@PutMapping(value = "/{studentProfileId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+@PutMapping(value = "/update-student-p/{studentProfileId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 public ResponseEntity<CustomResponseMessage<StudentProfileResponseDto>> updateStudentProfile(
 		@PathVariable UUID studentProfileId,
-		@Valid @ModelAttribute StudentProfileRequestDto request,
-		@RequestParam(value = "profilePicture", required = false) MultipartFile profilePicture
+		@Valid @ModelAttribute StudentProfileRequestDto request
 ) {
 	StudentProfileResponseDto data = studentService.updateStudentProfile(
-			studentProfileId, request, profilePicture
+			studentProfileId, request
 	);
 	return ResponseEntity.ok(
 			new CustomResponseMessage<>(
@@ -176,7 +125,7 @@ public ResponseEntity<CustomResponseMessage<StudentProfileResponseDto>> updateSt
 		@ApiResponse(responseCode = "401", description = "Unauthorized"),
 		@ApiResponse(responseCode = "403", description = "Forbidden - Admin access required")
 })
-@DeleteMapping("/{studentProfileId}")
+@DeleteMapping("/delete-student-p/{studentProfileId}")
 public ResponseEntity<CustomResponseMessage<Void>> deleteStudentProfile(
 		@PathVariable UUID studentProfileId
 ) {
@@ -199,35 +148,12 @@ public ResponseEntity<CustomResponseMessage<Void>> deleteStudentProfile(
 		@ApiResponse(responseCode = "401", description = "Unauthorized"),
 		@ApiResponse(responseCode = "403", description = "Forbidden - Admin access required")
 })
-@GetMapping("/count")
+@GetMapping("/count-student-profiles")
 public ResponseEntity<CustomResponseMessage<Long>> countAllStudents() {
 	long count = studentService.countAllStudents();
 	return ResponseEntity.ok(
 			new CustomResponseMessage<>(
 					"Total active students retrieved successfully.",
-					HttpStatus.OK.value(),
-					count
-			)
-	);
-}
-
-@Operation(
-		summary = "Count students by class and academic year",
-		description = "Returns the total count of students in a specific class and academic year"
-)
-@ApiResponses({
-		@ApiResponse(responseCode = "200", description = "Count retrieved successfully"),
-		@ApiResponse(responseCode = "401", description = "Unauthorized")
-})
-@GetMapping("/count/class")
-public ResponseEntity<CustomResponseMessage<Long>> countByClassAndYear(
-		@RequestParam String currentClass,
-		@RequestParam String academicYear
-) {
-	long count = studentService.countByClassAndYear(currentClass, academicYear);
-	return ResponseEntity.ok(
-			new CustomResponseMessage<>(
-					"Student count for class " + currentClass + " (" + academicYear + ") retrieved successfully.",
 					HttpStatus.OK.value(),
 					count
 			)
@@ -243,7 +169,7 @@ public ResponseEntity<CustomResponseMessage<Long>> countByClassAndYear(
 		@ApiResponse(responseCode = "401", description = "Unauthorized")
 })
 @GetMapping("/search")
-public ResponseEntity<CustomResponseMessage<Page<StudentProfileSummaryDto>>> searchAndFilterStudents(
+public ResponseEntity<CustomResponseMessage<Page<StudentProfileResponseDto>>> searchAndFilterStudents(
 		@Parameter(description = "Keyword to search by name, email, student number or national ID")
 		@RequestParam(required = false) String keyword,
 		
@@ -301,7 +227,7 @@ public ResponseEntity<CustomResponseMessage<Page<StudentProfileSummaryDto>>> sea
 		@Parameter(description = "Sort direction: asc or desc", example = "desc")
 		@RequestParam(defaultValue = "desc") String sortDir
 ) {
-	Page<StudentProfileSummaryDto> data = studentService.searchAndFilterStudents(
+	Page<StudentProfileResponseDto> data = studentService.searchAndFilterStudents(
 			keyword, currentClass, academicYear, currentSection,
 			enrollmentStatus, gender, nationality, city, country,
 			isFeeDefaulter, isBoarder, usesSchoolTransport,
@@ -329,10 +255,10 @@ public ResponseEntity<CustomResponseMessage<Page<StudentProfileSummaryDto>>> sea
 		@ApiResponse(responseCode = "403", description = "Forbidden - Admin access required")
 })
 @GetMapping("/fee-defaulters")
-public ResponseEntity<CustomResponseMessage<List<StudentProfileSummaryDto>>> fetchFeeDefaulters(
+public ResponseEntity<CustomResponseMessage<List<StudentProfileResponseDto>>> fetchFeeDefaulters(
 		@RequestParam String academicYear
 ) {
-	List<StudentProfileSummaryDto> data = studentService.fetchFeeDefaulters(academicYear);
+	List<StudentProfileResponseDto> data = studentService.fetchFeeDefaulters(academicYear);
 	return ResponseEntity.ok(
 			new CustomResponseMessage<>(
 					data.isEmpty()
@@ -354,10 +280,10 @@ public ResponseEntity<CustomResponseMessage<List<StudentProfileSummaryDto>>> fet
 		@ApiResponse(responseCode = "403", description = "Forbidden - Admin access required")
 })
 @GetMapping("/boarders")
-public ResponseEntity<CustomResponseMessage<List<StudentProfileSummaryDto>>> fetchBoardersByHostel(
+public ResponseEntity<CustomResponseMessage<List<StudentProfileResponseDto>>> fetchBoardersByHostel(
 		@RequestParam String hostelName
 ) {
-	List<StudentProfileSummaryDto> data = studentService.fetchBoardersByHostel(hostelName);
+	List<StudentProfileResponseDto> data = studentService.fetchBoardersByHostel(hostelName);
 	return ResponseEntity.ok(
 			new CustomResponseMessage<>(
 					data.isEmpty()
@@ -379,11 +305,11 @@ public ResponseEntity<CustomResponseMessage<List<StudentProfileSummaryDto>>> fet
 		@ApiResponse(responseCode = "403", description = "Forbidden - Admin access required")
 })
 @GetMapping("/scholarships")
-public ResponseEntity<CustomResponseMessage<List<StudentProfileSummaryDto>>> fetchStudentsWithScholarship(
+public ResponseEntity<CustomResponseMessage<List<StudentProfileResponseDto>>> fetchStudentsWithScholarship(
 		@Parameter(description = "Minimum scholarship percentage", example = "50.0")
 		@RequestParam(defaultValue = "0.0") Double minPercentage
 ) {
-	List<StudentProfileSummaryDto> data = studentService.fetchStudentsWithScholarship(minPercentage);
+	List<StudentProfileResponseDto> data = studentService.fetchStudentsWithScholarship(minPercentage);
 	return ResponseEntity.ok(
 			new CustomResponseMessage<>(
 					data.isEmpty()

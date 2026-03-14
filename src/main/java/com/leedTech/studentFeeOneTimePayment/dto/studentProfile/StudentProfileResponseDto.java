@@ -229,6 +229,6 @@ public record StudentProfileResponseDto(
 		@Schema(description = "Record creation timestamp")
 		Instant createdAt,
 		
-		@Schema(description = "Record last update timestamp")
+		@Schema(description = "Record last updated timestamp")
 		Instant updatedAt
 ) {}

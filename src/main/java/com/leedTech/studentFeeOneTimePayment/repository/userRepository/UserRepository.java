@@ -16,8 +16,6 @@ Optional<User> findByEmail(String email);
 boolean existsByEmail(String email);
 List<User> findAllByRole( UserRole role);
 Optional<User> findByMagicLinkToken(String magicLinkToken);
-@Query ("SELECT u FROM User u WHERE u.otpCode IS NOT NULL AND u.otpExpirationDate > :now")
-Optional<User> findByOtpCode(String otpCode);
 @Query("SELECT u FROM User u WHERE u.otpExpirationDate > :now")
 List<User> findUsersWithActiveOtp(Instant now);
 }

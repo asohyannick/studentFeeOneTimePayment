@@ -154,7 +154,7 @@ private String buildOtpEmailBody(String studentName, String otpCode) {
                                 <div class="otp-section">
                                     <div class="otp-label">🔐 Your Verification Code</div>
                                     <div class="otp-code">%s</div>
-                                    <div class="otp-timer">⏱ Expires in 50 minutes</div>
+                                    <div class="otp-timer">⏱ Expires in 5 minutes</div>
                                 </div>
                                 <div class="steps">
                                     <h4>How to use your OTP:</h4>
@@ -275,7 +275,7 @@ private String buildMagicLinkEmailBody(String studentName, String magicLinkUrl) 
                                 <div class="btn-container">
                                     <a href="%s" class="btn-magic">✨ &nbsp; Login with Magic Link</a>
                                     <br/>
-                                    <span class="timer-badge">⏱ Expires in 50 minutes</span>
+                                    <span class="timer-badge">⏱ Expires in 5 minutes</span>
                                 </div>
                                 <div class="url-box">
                                     <p>Or copy and paste this link into your browser</p>

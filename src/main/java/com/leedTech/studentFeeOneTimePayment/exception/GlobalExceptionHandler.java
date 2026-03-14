@@ -1,23 +1,30 @@
 package com.leedTech.studentFeeOneTimePayment.exception;
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.apache.tomcat.util.http.fileupload.impl.FileCountLimitExceededException;
+import org.apache.tomcat.util.http.fileupload.impl.FileSizeLimitExceededException;
+import org.apache.tomcat.util.http.fileupload.impl.SizeLimitExceededException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.multipart.MultipartException;
 import org.springframework.web.servlet.NoHandlerFoundException;
+
 import java.time.Instant;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-private ResponseEntity<GlobalExceptionResponseHandler> buildResponse(
+
+private ResponseEntity <GlobalExceptionResponseHandler> buildResponse(
 		String message,
 		String details,
 		String statusCode,
 		HttpStatus status,
 		HttpServletRequest request
 ) {
-	
 	GlobalExceptionResponseHandler response =
 			new GlobalExceptionResponseHandler(
 					Instant.now(),
@@ -28,19 +35,17 @@ private ResponseEntity<GlobalExceptionResponseHandler> buildResponse(
 					request.getRequestURI(),
 					request.getMethod()
 			);
-	
 	return ResponseEntity.status(status).body(response);
 }
 
-
-@ExceptionHandler (NotFoundException.class)
+@ExceptionHandler (NoHandlerFoundException.class)
 public ResponseEntity<GlobalExceptionResponseHandler> handleNotFoundException(
 		NoHandlerFoundException ex,
 		HttpServletRequest request
 ) {
 	return buildResponse(
-			ex.getMessage(),
-			"Resource not found!",
+			"Resource not found: " + ex.getRequestURL(),
+			"The requested endpoint does not exist",
 			HttpStatus.NOT_FOUND.getReasonPhrase(),
 			HttpStatus.NOT_FOUND,
 			request
@@ -120,6 +125,71 @@ public ResponseEntity<GlobalExceptionResponseHandler> handleGlobalException(
 			"An unexpected error occurred",
 			HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(),
 			HttpStatus.INTERNAL_SERVER_ERROR,
+			request
+	);
+}
+
+@ExceptionHandler( HttpMediaTypeNotSupportedException.class)
+public ResponseEntity<GlobalExceptionResponseHandler> handleMediaTypeNotSupported(
+		HttpMediaTypeNotSupportedException ex,
+		HttpServletRequest request
+) {
+	return buildResponse(
+			"Content type '" + ex.getContentType() + "' is not supported",
+			"This endpoint requires Content-Type: multipart/form-data",
+			HttpStatus.UNSUPPORTED_MEDIA_TYPE.getReasonPhrase(),
+			HttpStatus.UNSUPPORTED_MEDIA_TYPE,
+			request
+	);
+}
+
+@ExceptionHandler(HttpMessageNotReadableException.class)
+public ResponseEntity<GlobalExceptionResponseHandler> handleMessageNotReadable(
+		HttpMessageNotReadableException ex,
+		HttpServletRequest request
+) {
+	return buildResponse(
+			"Malformed or missing request body",
+			"Please provide a valid request payload",
+			HttpStatus.BAD_REQUEST.getReasonPhrase(),
+			HttpStatus.BAD_REQUEST,
+			request
+	);
+}
+
+@ExceptionHandler( MissingServletRequestParameterException.class)
+public ResponseEntity<GlobalExceptionResponseHandler> handleMissingParams(
+		MissingServletRequestParameterException ex,
+		HttpServletRequest request
+) {
+	return buildResponse(
+			"Required parameter '" + ex.getParameterName() + "' is missing",
+			"Please provide all required parameters",
+			HttpStatus.BAD_REQUEST.getReasonPhrase(),
+			HttpStatus.BAD_REQUEST,
+			request
+	);
+}
+
+@ExceptionHandler( MultipartException.class)
+public ResponseEntity<GlobalExceptionResponseHandler> handleMultipartException(
+		MultipartException ex,
+		HttpServletRequest request
+) {
+	String message = "Failed to process multipart request";
+	
+	if (ex.getCause() instanceof FileCountLimitExceededException ) {
+		message = "Too many form fields. Please reduce the number of fields in your request";
+	} else if (ex.getCause() instanceof FileSizeLimitExceededException ) {
+		message = "File size exceeds the maximum allowed limit of 10MB";
+	} else if (ex.getCause() instanceof SizeLimitExceededException ) {
+		message = "Total request size exceeds the maximum allowed limit of 50MB";
+	}
+	return buildResponse(
+			message,
+			"Multipart request processing failed",
+			HttpStatus.BAD_REQUEST.getReasonPhrase(),
+			HttpStatus.BAD_REQUEST,
 			request
 	);
 }

@@ -5,6 +5,19 @@ spring:
     import: optional:file:.env.properties
   profiles:
     active: ${SPRING_PROFILES_ACTIVE}
+  mvc:
+    throw-exception-if-no-handler-found: true
+  web:
+      resources:
+        add-mappings: false
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 50MB
+      file-size-threshold: 2KB
+      resolve-lazily: false
+
   data:
     redis:
       host: ${REDIS_HOST}
@@ -24,9 +37,10 @@ spring:
     baseline-on-migrate: true
   jpa:
       hibernate:
+        format_sql: true
         ddl-auto: validate
-      show-sql: true
-      open-in-view: false
+        show-sql: true
+        open-in-view: false
   mail:
     host: ${MAIL_TRAP_HOST}
     port: ${MAIL_TRAP_PORT}
@@ -46,6 +60,16 @@ spring:
 
 server:
   port: ${PORT}
+  tomcat:
+    max-swallow-size: 50MB
+    max-http-form-post-size: 50MB
+    max-connections: 200
+  error:
+    whitelabel:
+      enabled: false
+    path: /error
+    include-message: always
+    include-binding-errors: always
 
 api:
   version: ${API_VERSION}
@@ -162,3 +186,7 @@ cloudinary:
   cloud-name: ${CLOUDINARY_CLOUD_NAME}
   api-key: ${CLOUDINARY_API_KEY}
   api-secret: ${CLOUDINARY_API_SECRET}
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.orm.jdbc.bind: TRACE

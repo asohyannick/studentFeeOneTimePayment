@@ -1,9 +1,9 @@
 package com.leedTech.studentFeeOneTimePayment.service.studentService;
+
 import com.leedTech.studentFeeOneTimePayment.constant.EnrollmentStatus;
 import com.leedTech.studentFeeOneTimePayment.constant.Gender;
 import com.leedTech.studentFeeOneTimePayment.dto.studentProfile.StudentProfileRequestDto;
 import com.leedTech.studentFeeOneTimePayment.dto.studentProfile.StudentProfileResponseDto;
-import com.leedTech.studentFeeOneTimePayment.dto.studentProfile.StudentProfileSummaryDto;
 import com.leedTech.studentFeeOneTimePayment.entity.studentProfile.StudentProfile;
 import com.leedTech.studentFeeOneTimePayment.entity.user.User;
 import com.leedTech.studentFeeOneTimePayment.exception.BadRequestException;
@@ -22,6 +22,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+
 import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
@@ -43,38 +44,38 @@ private StudentProfile findProfileById(UUID studentProfileId) {
 			       ));
 }
 
-
-@Transactional
-public StudentProfileResponseDto createStudentProfile(StudentProfileRequestDto request, MultipartFile profilePicture) {
+@Transactional(readOnly = true)
+public StudentProfileResponseDto createStudentProfile(StudentProfileRequestDto request) {
 	
-	User student = userRepository.findById(request.studentId())
+	User student = userRepository.findById(request.getStudentId())
 			               .orElseThrow(() -> new NotFoundException(
-					               "User not found with id: " + request.studentId()
+					               "User not found with id: " + request.getStudentId()
 			               ));
 	
-	if (studentProfileRepository.existsByStudentId(request.studentId())) {
+	if (studentProfileRepository.existsByStudentId(request.getStudentId())) {
 		throw new BadRequestException(
-				"Student profile already exists for user: " + request.studentId()
+				"Student profile already exists for user: " + request.getStudentId()
 		);
 	}
 	
-	if (request.studentNumber() != null &&
-			    studentProfileRepository.existsByStudentNumber(request.studentNumber())) {
-		throw new BadRequestException("Student number already in use: " + request.studentNumber());
+	if (request.getStudentNumber() != null &&
+			    studentProfileRepository.existsByStudentNumber(request.getStudentNumber().trim ())) {
+		throw new BadRequestException("Student number already in use: " + request.getStudentNumber());
 	}
-	if (request.nationalId() != null &&
-			    studentProfileRepository.existsByNationalId(request.nationalId())) {
-		throw new BadRequestException("National ID already in use: " + request.nationalId());
+	if (request.getNationalId() != null &&
+			    studentProfileRepository.existsByNationalId(request.getNationalId())) {
+		throw new BadRequestException("National ID already in use: " + request.getNationalId());
 	}
-	if (request.personalEmail() != null &&
-			    studentProfileRepository.existsByPersonalEmail(request.personalEmail())) {
-		throw new BadRequestException("Personal email already in use: " + request.personalEmail());
+	if (request.getPersonalEmail() != null &&
+			    studentProfileRepository.existsByPersonalEmail(request.getPersonalEmail())) {
+		throw new BadRequestException("Personal email already in use: " + request.getPersonalEmail());
 	}
 	
 	StudentProfile profile = studentProfileMapper.toEntity(request);
 	profile.setStudent(student);
 	StudentProfile saved = studentProfileRepository.save(profile);
 	
+	MultipartFile profilePicture = request.getProfilePicture();
 	if (profilePicture != null && !profilePicture.isEmpty()) {
 		String imageUrl = profilePictureService.uploadProfilePicture(saved.getId(), profilePicture);
 		saved.setProfilePictureUrl(imageUrl);
@@ -85,7 +86,9 @@ public StudentProfileResponseDto createStudentProfile(StudentProfileRequestDto r
 	return studentProfileMapper.toResponseDto(saved);
 }
 
-public Page<StudentProfileSummaryDto> fetchAllStudents(
+
+@Transactional(readOnly = true)
+public Page<StudentProfileResponseDto> fetchAllStudents(
 		int page,
 		int size,
 		String sortBy,
@@ -104,47 +107,45 @@ public Page<StudentProfileSummaryDto> fetchAllStudents(
 			       .map(studentProfileMapper::toSummaryDto);
 }
 
+@Transactional(readOnly = true)
 public StudentProfileResponseDto fetchStudentById(UUID studentProfileId) {
 	StudentProfile profile = findProfileById(studentProfileId);
-	return studentProfileMapper.toResponseDto(profile);
-}
-
-public StudentProfileResponseDto fetchStudentByStudentNumber(String studentNumber) {
-	StudentProfile profile = studentProfileRepository.findByStudentNumber(studentNumber)
-			                         .orElseThrow(() -> new NotFoundException(
-					                         "Student profile not found with student number: " + studentNumber
-			                         ));
 	return studentProfileMapper.toResponseDto(profile);
 }
 
 @Transactional
 public StudentProfileResponseDto updateStudentProfile(
 		UUID studentProfileId,
-		StudentProfileRequestDto request,
-		MultipartFile profilePicture
+		StudentProfileRequestDto request
 ) {
 	StudentProfile profile = findProfileById(studentProfileId);
 	
-	if (request.studentNumber() != null &&
-			    !request.studentNumber().equals(profile.getStudentNumber()) &&
-			    studentProfileRepository.existsByStudentNumber(request.studentNumber())) {
-		throw new BadRequestException("Student number already in use: " + request.studentNumber());
+	if (request.getStudentNumber() != null) {
+		profile.setStudentNumber(request.getStudentNumber().trim());
 	}
-	if (request.nationalId() != null &&
-			    !request.nationalId().equals(profile.getNationalId()) &&
-			    studentProfileRepository.existsByNationalId(request.nationalId())) {
-		throw new BadRequestException("National ID already in use: " + request.nationalId());
+	if (request.getStudentNumber() != null &&
+			    !request.getStudentNumber().equals(profile.getStudentNumber()) &&
+			    studentProfileRepository.existsByStudentNumber(request.getStudentNumber())) {
+		throw new BadRequestException("Student number already in use: " + request.getStudentNumber());
 	}
-	if (request.personalEmail() != null &&
-			    !request.personalEmail().equals(profile.getPersonalEmail()) &&
-			    studentProfileRepository.existsByPersonalEmail(request.personalEmail())) {
-		throw new BadRequestException("Personal email already in use: " + request.personalEmail());
+	if (request.getNationalId() != null &&
+			    !request.getNationalId().equals(profile.getNationalId()) &&
+			    studentProfileRepository.existsByNationalId(request.getNationalId())) {
+		throw new BadRequestException("National ID already in use: " + request.getNationalId());
+	}
+	if (request.getPersonalEmail() != null &&
+			    !request.getPersonalEmail().equals(profile.getPersonalEmail()) &&
+			    studentProfileRepository.existsByPersonalEmail(request.getPersonalEmail())) {
+		throw new BadRequestException("Personal email already in use: " + request.getPersonalEmail());
 	}
 	
 	studentProfileMapper.updateEntityFromDto(request, profile);
 	
+	MultipartFile profilePicture = request.getProfilePicture();
 	if (profilePicture != null && !profilePicture.isEmpty()) {
-		String imageUrl = profilePictureService.uploadProfilePicture(studentProfileId, profilePicture);
+		String imageUrl = profilePictureService.uploadProfilePicture(
+				studentProfileId, profilePicture
+		);
 		profile.setProfilePictureUrl(imageUrl);
 	}
 	
@@ -153,7 +154,7 @@ public StudentProfileResponseDto updateStudentProfile(
 	return studentProfileMapper.toResponseDto(updated);
 }
 
-@Transactional
+@Transactional(readOnly = true)
 public void deleteStudentProfile(UUID studentProfileId) {
 	StudentProfile profile = findProfileById(studentProfileId);
 	
@@ -169,15 +170,13 @@ public void deleteStudentProfile(UUID studentProfileId) {
 	log.info("Student profile soft deleted: {}", studentProfileId);
 }
 
+@Transactional(readOnly = true)
 public long countAllStudents() {
 	return studentProfileRepository.countByEnrollmentStatus(EnrollmentStatus.ACTIVE);
 }
 
-public long countByClassAndYear(String currentClass, String academicYear) {
-	return studentProfileRepository.countByClassAndYear(currentClass, academicYear);
-}
-
-public Page<StudentProfileSummaryDto> searchAndFilterStudents(
+@Transactional(readOnly = true)
+public Page<StudentProfileResponseDto> searchAndFilterStudents(
 		String keyword,
 		String currentClass,
 		String academicYear,
@@ -226,21 +225,24 @@ public Page<StudentProfileSummaryDto> searchAndFilterStudents(
 			       .map(studentProfileMapper::toSummaryDto);
 }
 
-public List<StudentProfileSummaryDto> fetchFeeDefaulters(String academicYear) {
+@Transactional(readOnly = true)
+public List<StudentProfileResponseDto> fetchFeeDefaulters(String academicYear) {
 	return studentProfileRepository.findFeeDefaultersByAcademicYear(academicYear)
 			       .stream()
 			       .map(studentProfileMapper::toSummaryDto)
 			       .toList();
 }
 
-public List<StudentProfileSummaryDto> fetchBoardersByHostel(String hostelName) {
+@Transactional(readOnly = true)
+public List<StudentProfileResponseDto> fetchBoardersByHostel(String hostelName) {
 	return studentProfileRepository.findBoardersByHostel(hostelName)
 			       .stream()
 			       .map(studentProfileMapper::toSummaryDto)
 			       .toList();
 }
 
-public List<StudentProfileSummaryDto> fetchStudentsWithScholarship(Double minPercentage) {
+@Transactional(readOnly = true)
+public List<StudentProfileResponseDto> fetchStudentsWithScholarship(Double minPercentage) {
 	return studentProfileRepository.findStudentsWithScholarship(minPercentage)
 			       .stream()
 			       .map(studentProfileMapper::toSummaryDto)
