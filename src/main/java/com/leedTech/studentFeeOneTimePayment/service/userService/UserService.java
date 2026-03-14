@@ -1,4 +1,5 @@
 package com.leedTech.studentFeeOneTimePayment.service.userService;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseToken;
 import com.leedTech.studentFeeOneTimePayment.config.emailTemplateConfig.EmailConfigTemplate;
@@ -20,9 +21,12 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.time.Duration;
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 @Slf4j
 @Service
@@ -411,5 +415,78 @@ public void unblockStudent(UUID studentId) {
 	student.setAccountActive(true);
 	userRepository.save(student);
 	log.info("Student account unblocked: {}", student.getEmail());
+}
+
+@Transactional
+public void forgotPassword(ForgotPasswordRequestDto request) {
+	User user = userRepository.findByEmail(request.email())
+			            .orElseThrow(() -> new NotFoundException("No account found with this email"));
+	
+	if (!user.isAccountVerified()) {
+		throw new BadRequestException("Account is not verified. Please verify your account first");
+	}
+	
+	String rawOtp = emailConfigTemplate.generateOtp();
+	String hashedOtp = passwordEncoder.encode(rawOtp);
+	
+	user.setOtpCode(hashedOtp);
+	user.setOtpExpirationDate(Instant.now().plus(5, ChronoUnit.MINUTES));
+	userRepository.save(user);
+	
+	emailConfigTemplate.sendPasswordResetOtpEmail(
+			user.getEmail(),
+			user.getFirstName(),
+			rawOtp
+	);
+	
+	log.info("Password reset OTP sent to: {}", user.getEmail());
+}
+
+@Transactional
+public Map <String, String> verifyResetOtp( VerifyResetOtpCode request) {
+	
+	List<User> usersWithOtp = userRepository.findUsersWithActiveOtp(Instant.now());
+	
+	User matchedUser = usersWithOtp.stream()
+			                   .filter(user -> passwordEncoder.matches(request.otpCode(), user.getOtpCode()))
+			                   .findFirst()
+			                   .orElseThrow(() -> new BadRequestException("Invalid OTP code"));
+	
+	if (Instant.now().isAfter(matchedUser.getOtpExpirationDate())) {
+		throw new BadRequestException("OTP has expired. Please request a new one");
+	}
+	
+	matchedUser.setOtpCode(null);
+	matchedUser.setOtpExpirationDate(null);
+	
+	userRepository.save(matchedUser);
+	
+	String resetToken = jwtConfig.generatePasswordResetToken(matchedUser.getEmail());
+	
+	log.info("Reset OTP verified for: {}", matchedUser.getEmail());
+	
+	return Map.of("resetToken", resetToken);
+}
+
+@Transactional
+public void resetPassword(String token, ResetPasswordRequestDto request) {
+
+	if (!jwtConfig.isPasswordResetToken(token)) {
+		throw new BadRequestException("Invalid reset token");
+	}
+	
+	String email = jwtConfig.extractEmailFromPasswordResetToken(token);
+	
+	User user = userRepository.findByEmail(email)
+			            .orElseThrow(() -> new NotFoundException("User not found"));
+	
+	if (passwordEncoder.matches(request.newPassword(), user.getPassword())) {
+		throw new BadRequestException("New password must be different from the old password");
+	}
+	
+	user.setPassword(passwordEncoder.encode(request.newPassword()));
+	userRepository.save(user);
+	
+	log.info("Password reset successfully for: {}", user.getEmail());
 }
 }

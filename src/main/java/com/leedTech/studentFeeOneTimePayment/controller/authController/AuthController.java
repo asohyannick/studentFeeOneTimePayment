@@ -1,4 +1,5 @@
 package com.leedTech.studentFeeOneTimePayment.controller.authController;
+
 import com.leedTech.studentFeeOneTimePayment.config.customResponseMessage.CustomResponseMessage;
 import com.leedTech.studentFeeOneTimePayment.dto.auth.*;
 import com.leedTech.studentFeeOneTimePayment.service.userService.UserService;
@@ -13,7 +14,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 @RestController
 @RequestMapping("/api/${api.version}/auth")
@@ -361,4 +364,39 @@ public ResponseEntity<CustomResponseMessage<Void>> unblockStudent(
 			)
 	);
 }
+
+@PostMapping("/forgot-password")
+public ResponseEntity< Map <String, Object> > forgotPassword(
+		@Valid @RequestBody ForgotPasswordRequestDto request) {
+	
+	userService.forgotPassword(request);
+	
+	return ResponseEntity.ok(Map.of(
+			"message", "Password reset OTP sent. Please check your email.",
+			"statusCode", 200
+	));
+}
+
+@PostMapping("/verify-reset-otp")
+public ResponseEntity<Map<String, String>> verifyResetOtp(
+		@RequestBody VerifyResetOtpCode verifyResetOtpCode) {
+	
+	Map<String, String> response = userService.verifyResetOtp(verifyResetOtpCode);
+	
+	return ResponseEntity.ok(response);
+}
+
+@PostMapping("/reset-password")
+public ResponseEntity<Map<String, Object>> resetPassword(
+		@RequestHeader("Authorization") String token,
+		@Valid @RequestBody ResetPasswordRequestDto request) {
+	
+	userService.resetPassword(token.replace("Bearer ", ""), request);
+	
+	return ResponseEntity.ok(Map.of(
+			"message", "Password reset successfully. You can now login with your new password.",
+			"statusCode", 200
+	));
+}
+
 }

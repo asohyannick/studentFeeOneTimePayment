@@ -30,6 +30,7 @@ private static final String ROLE_CLAIM      = "role";
 private static final String TOKEN_TYPE_CLAIM = "tokenType";
 private static final String ACCESS_TOKEN     = "ACCESS";
 private static final String REFRESH_TOKEN    = "REFRESH";
+private static final long PASSWORD_RESET_EXPIRATION = 1000 * 60 * 5L;
 
 private SecretKey getSigningKey() {
 	byte[] keyBytes = jwtSecretKey.getBytes(StandardCharsets.UTF_8);
@@ -72,41 +73,6 @@ public Claims validateToken(String token) {
 			       .getPayload();
 }
 
-public boolean isTokenValid(String token) {
-	try {
-		validateToken(token);
-		return true;
-	} catch (ExpiredJwtException e) {
-		throw new ExpiredJwtException(e.getHeader(), e.getClaims(), "Token has expired");
-	} catch (JwtException e) {
-		throw new JwtException("Invalid token: " + e.getMessage());
-	}
-}
-
-public boolean isAccessToken(String token) {
-	return ACCESS_TOKEN.equals(extractClaim(token, ROLE_CLAIM));
-}
-
-public boolean isRefreshToken(String token) {
-	return REFRESH_TOKEN.equals(extractClaim(token, TOKEN_TYPE_CLAIM));
-}
-
-public String extractEmail(String token) {
-	return validateToken(token).getSubject();
-}
-
-public String extractRole(String token) {
-	return validateToken(token).get(ROLE_CLAIM, String.class);
-}
-
-public boolean isTokenExpired(String token) {
-	return validateToken(token).getExpiration().before(new Date());
-}
-
-public <T> T extractClaim(String token, String claimKey) {
-	return (T) validateToken(token).get(claimKey);
-}
-
 public long getAccessTokenExpirationSeconds() {
 	return accessTokenExpirationMs / 1000;
 }
@@ -125,37 +91,40 @@ public String generateMagicLinkToken(String email) {
 			       .compact();
 }
 
-public String extractEmailFromMagicLinkToken(String token) {
-	return Jwts.parser()
-			       .verifyWith(getSigningKey())
-			       .build()
-			       .parseSignedClaims(token)
-			       .getPayload()
-			       .getSubject();
-}
-
-public boolean isMagicLinkToken(String token) {
+public boolean isPasswordResetToken(String token) {
 	try {
 		Claims claims = Jwts.parser()
 				                .verifyWith(getSigningKey())
 				                .build()
 				                .parseSignedClaims(token)
 				                .getPayload();
-		return "magic-link".equals(claims.get("type", String.class));
+		
+		return "PASSWORD_RESET".equals(claims.get("type", String.class));
 	} catch (JwtException e) {
 		return false;
 	}
 }
 
-public boolean isMagicLinkTokenValid(String token) {
+public String generatePasswordResetToken(String email) {
+	return Jwts.builder()
+			       .subject(email)
+			       .claim("type", "PASSWORD_RESET")
+			       .issuedAt(new Date())
+			       .expiration(new Date(System.currentTimeMillis() + PASSWORD_RESET_EXPIRATION))
+			       .signWith(getSigningKey())
+			       .compact();
+}
+
+public String extractEmailFromPasswordResetToken(String token) {
 	try {
-		Jwts.parser()
-				.verifyWith(getSigningKey())
-				.build()
-				.parseSignedClaims(token);
-		return isMagicLinkToken(token);
-	} catch (JwtException | IllegalArgumentException e) {
-		return false;
+		return Jwts.parser()
+				       .verifyWith(getSigningKey())
+				       .build()
+				       .parseSignedClaims(token)
+				       .getPayload()
+				       .getSubject();
+	} catch (JwtException e) {
+		throw new BadRequestException("Invalid password reset token");
 	}
 }
 }

@@ -24,10 +24,8 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
-
 @Slf4j
 @Configuration
 @EnableWebSecurity
@@ -51,6 +49,9 @@ private String[] publicEndpoints() {
 			base + "/magic-link/send",
 			base + "/magic-link/verify",
 			base + "/magic-link/resend",
+			base + "/forgot-password",
+            base + "/verify-reset-otp",
+			base + "/reset-password",
 			"/v3/api-docs/**",
 			"/swagger-ui/**",
 			"/swagger-ui.html"

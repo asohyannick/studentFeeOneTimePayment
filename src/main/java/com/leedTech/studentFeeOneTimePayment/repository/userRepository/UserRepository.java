@@ -4,7 +4,6 @@ import com.leedTech.studentFeeOneTimePayment.constant.UserRole;
 import com.leedTech.studentFeeOneTimePayment.entity.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.Instant;
@@ -18,5 +17,7 @@ boolean existsByEmail(String email);
 List<User> findAllByRole( UserRole role);
 Optional<User> findByMagicLinkToken(String magicLinkToken);
 @Query ("SELECT u FROM User u WHERE u.otpCode IS NOT NULL AND u.otpExpirationDate > :now")
-List<User> findUsersWithActiveOtp(@Param ("now") Instant now);
+Optional<User> findByOtpCode(String otpCode);
+@Query("SELECT u FROM User u WHERE u.otpExpirationDate > :now")
+List<User> findUsersWithActiveOtp(Instant now);
 }
