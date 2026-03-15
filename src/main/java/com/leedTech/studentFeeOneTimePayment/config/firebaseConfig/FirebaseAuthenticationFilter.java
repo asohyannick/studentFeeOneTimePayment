@@ -20,46 +20,46 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FirebaseAuthenticationFilter extends OncePerRequestFilter {
 
-private final FirebaseAuth firebaseAuth;
-
-@Override
-protected void doFilterInternal(
-		HttpServletRequest request,
-		HttpServletResponse response,
-		FilterChain filterChain
-) throws ServletException, IOException {
-	
-	String authHeader = request.getHeader("Authorization");
-	
-	if (authHeader == null || !authHeader.startsWith("Firebase ")) {
-		filterChain.doFilter(request, response);
-		return;
-	}
-	
-	String idToken = authHeader.substring(9);
-	
-	try {
-		FirebaseToken firebaseToken = firebaseAuth.verifyIdToken(idToken);
-		
-		String email = firebaseToken.getEmail();
-		String role  = (String) firebaseToken.getClaims().getOrDefault("role", "STUDENT");
-		
-		UsernamePasswordAuthenticationToken authentication =
-				new UsernamePasswordAuthenticationToken(
-						email,
-						null,
-						List.of(new SimpleGrantedAuthority("ROLE_" + role))
-				);
-		
-		SecurityContextHolder.getContext().setAuthentication(authentication);
-		log.info("Firebase token verified for user: {}", email);
-		
-	} catch (Exception e) {
-		log.error("Firebase token verification failed: {}", e.getMessage());
-		response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid Firebase token");
-		return;
-	}
-	
-	filterChain.doFilter(request, response);
-}
+			private final FirebaseAuth firebaseAuth;
+			
+			@Override
+			protected void doFilterInternal(
+					HttpServletRequest request,
+					HttpServletResponse response,
+					FilterChain filterChain
+			) throws ServletException, IOException {
+				
+				String authHeader = request.getHeader("Authorization");
+				
+				if (authHeader == null || !authHeader.startsWith("Firebase ")) {
+					filterChain.doFilter(request, response);
+					return;
+				}
+				
+				String idToken = authHeader.substring(9);
+				
+				try {
+					FirebaseToken firebaseToken = firebaseAuth.verifyIdToken(idToken);
+					
+					String email = firebaseToken.getEmail();
+					String role  = (String) firebaseToken.getClaims().getOrDefault("role", "STUDENT");
+					
+					UsernamePasswordAuthenticationToken authentication =
+							new UsernamePasswordAuthenticationToken(
+									email,
+									null,
+									List.of(new SimpleGrantedAuthority("ROLE_" + role))
+							);
+					
+					SecurityContextHolder.getContext().setAuthentication(authentication);
+					log.info("Firebase token verified for user: {}", email);
+					
+				} catch (Exception e) {
+					log.error("Firebase token verification failed: {}", e.getMessage());
+					response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid Firebase token");
+					return;
+				}
+				
+				filterChain.doFilter(request, response);
+			}
 }

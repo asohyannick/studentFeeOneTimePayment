@@ -1,12 +1,13 @@
 package com.leedTech.studentFeeOneTimePayment.dto.studentProfile;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.leedTech.studentFeeOneTimePayment.constant.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.UUID;
-
+@JsonInclude (JsonInclude.Include.NON_NULL)
 @Schema(name = "StudentProfileResponse", description = "Response payload for student profile data")
 public record StudentProfileResponseDto(
 		

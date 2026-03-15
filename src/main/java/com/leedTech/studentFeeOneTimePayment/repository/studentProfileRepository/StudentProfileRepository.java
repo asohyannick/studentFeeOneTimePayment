@@ -18,61 +18,61 @@ import java.util.UUID;
 
 @Repository
 public interface StudentProfileRepository extends JpaRepository<StudentProfile, UUID>, JpaSpecificationExecutor<StudentProfile> {
-
-@EntityGraph (attributePaths = {"student"})
-Page <StudentProfile> findAll( Specification <StudentProfile> spec, Pageable pageable);
-
-Optional<StudentProfile> findByStudentNumber(String studentNumber);
-
-boolean existsByStudentId(UUID studentId);
-boolean existsByStudentNumber(String studentNumber);
-boolean existsByNationalId(String nationalId);
-boolean existsByPersonalEmail(String personalEmail);
-
-
-@Query("""
-            SELECT sp FROM StudentProfile sp
-            WHERE sp.isDeleted = false
-            AND sp.isFeeDefaulter = true
-            AND sp.academicYear = :academicYear
-            ORDER BY sp.student.lastName ASC
-            """)
-List<StudentProfile> findFeeDefaultersByAcademicYear(@Param("academicYear") String academicYear);
-
-@Query("""
-            SELECT COUNT(sp) FROM StudentProfile sp
-            WHERE sp.isDeleted = false
-            AND sp.enrollmentStatus = :status
-            """)
-long countByEnrollmentStatus(@Param("status") EnrollmentStatus status);
-
-@Query("""
-            SELECT COUNT(sp) FROM StudentProfile sp
-            WHERE sp.isDeleted = false
-            AND sp.currentClass = :currentClass
-            AND sp.academicYear = :academicYear
-            """)
-long countByClassAndYear(
-		@Param("currentClass") String currentClass,
-		@Param("academicYear") String academicYear
-);
-
-@Query("""
-            SELECT sp FROM StudentProfile sp
-            WHERE sp.isDeleted = false
-            AND sp.isBoarder = true
-            AND sp.hostelName = :hostelName
-            ORDER BY sp.roomNumber ASC
-            """)
-List<StudentProfile> findBoardersByHostel(@Param("hostelName") String hostelName);
-
-@Query("""
-            SELECT sp FROM StudentProfile sp
-            WHERE sp.isDeleted = false
-            AND sp.scholarshipPercentage >= :minPercentage
-            ORDER BY sp.scholarshipPercentage DESC
-            """)
-List<StudentProfile> findStudentsWithScholarship(@Param("minPercentage") Double minPercentage);
+		
+		@EntityGraph (attributePaths = {"student"})
+		Page <StudentProfile> findAll( Specification <StudentProfile> spec, Pageable pageable);
+		
+		Optional<StudentProfile> findByStudentNumber(String studentNumber);
+		
+		boolean existsByStudentId(UUID studentId);
+		boolean existsByStudentNumber(String studentNumber);
+		boolean existsByNationalId(String nationalId);
+		boolean existsByPersonalEmail(String personalEmail);
+		
+		
+		@Query("""
+		            SELECT sp FROM StudentProfile sp
+		            WHERE sp.isDeleted = false
+		            AND sp.isFeeDefaulter = true
+		            AND sp.academicYear = :academicYear
+		            ORDER BY sp.student.lastName ASC
+		            """)
+		List<StudentProfile> findFeeDefaultersByAcademicYear(@Param("academicYear") String academicYear);
+		
+		@Query("""
+		            SELECT COUNT(sp) FROM StudentProfile sp
+		            WHERE sp.isDeleted = false
+		            AND sp.enrollmentStatus = :status
+		            """)
+		long countByEnrollmentStatus(@Param("status") EnrollmentStatus status);
+		
+		@Query("""
+		            SELECT COUNT(sp) FROM StudentProfile sp
+		            WHERE sp.isDeleted = false
+		            AND sp.currentClass = :currentClass
+		            AND sp.academicYear = :academicYear
+		            """)
+		long countByClassAndYear(
+				@Param("currentClass") String currentClass,
+				@Param("academicYear") String academicYear
+		);
+		
+		@Query("""
+		            SELECT sp FROM StudentProfile sp
+		            WHERE sp.isDeleted = false
+		            AND sp.isBoarder = true
+		            AND sp.hostelName = :hostelName
+		            ORDER BY sp.roomNumber ASC
+		            """)
+		List<StudentProfile> findBoardersByHostel(@Param("hostelName") String hostelName);
+		
+		@Query("""
+		            SELECT sp FROM StudentProfile sp
+		            WHERE sp.isDeleted = false
+		            AND sp.scholarshipPercentage >= :minPercentage
+		            ORDER BY sp.scholarshipPercentage DESC
+		            """)
+		List<StudentProfile> findStudentsWithScholarship(@Param("minPercentage") Double minPercentage);
 
 
 }

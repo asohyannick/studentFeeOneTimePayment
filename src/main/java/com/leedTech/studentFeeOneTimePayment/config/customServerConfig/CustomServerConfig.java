@@ -5,12 +5,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 @Configuration
 public class CustomServerConfig {
-@Bean
-public WebServerFactoryCustomizer<TomcatServletWebServerFactory> tomcatCustomizer() {
-	return factory -> factory.addConnectorCustomizers(connector -> {
-		connector.setMaxParameterCount(200);
-		connector.setMaxPartCount(200);
-		connector.setMaxPostSize(52428800);
-	});
-}
+
+			@Bean
+			public WebServerFactoryCustomizer<TomcatServletWebServerFactory> tomcatCustomizer() {
+				return factory -> factory.addConnectorCustomizers(connector -> {
+					connector.setMaxParameterCount(200);
+					connector.setMaxPartCount(200);
+					connector.setMaxPostSize(52428800);
+				});
+			}
 }

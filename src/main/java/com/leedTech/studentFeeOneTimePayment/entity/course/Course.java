@@ -1,6 +1,7 @@
 package com.leedTech.studentFeeOneTimePayment.entity.course;
 
 import com.leedTech.studentFeeOneTimePayment.constant.*;
+import com.leedTech.studentFeeOneTimePayment.entity.review.Review;
 import com.leedTech.studentFeeOneTimePayment.entity.user.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -10,6 +11,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Table(
@@ -43,6 +46,15 @@ public class Course {
 				foreignKey = @ForeignKey(name = "fk_courses_teacher_id")
 		)
 		private User teacher;
+
+		@OneToMany(
+				mappedBy = "course",
+				fetch = FetchType.LAZY,
+				cascade = CascadeType.ALL,
+				orphanRemoval = true
+		)
+		@Builder.Default
+		private List < Review > reviews = new ArrayList <> ();
 		
 		private String courseUrl;
 		

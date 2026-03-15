@@ -22,27 +22,27 @@ import org.springframework.web.bind.annotation.RestController;
 public class FeePaymentController {
 private final FeePaymentService feePaymentService;
 
-@Operation(
-		summary = "Process one-time fee payment",
-		description = "Processes a one-time fee payment for a student, applies incentive credit, updates balance and calculates next due date via Stripe"
-)
-@ApiResponses({
-		@ApiResponse(responseCode = "200", description = "Payment processed successfully"),
-		@ApiResponse(responseCode = "400", description = "Invalid payment amount or payment failed"),
-		@ApiResponse(responseCode = "404", description = "Student or account not found"),
-		@ApiResponse(responseCode = "401", description = "Unauthorized")
-})
-@PostMapping("/one-time-fee-payment")
-public ResponseEntity<CustomResponseMessage<OneTimePaymentResponseDto>> processOneTimePayment(
-		@Valid @RequestBody OneTimePaymentRequestDto request
-) {
-	OneTimePaymentResponseDto data = feePaymentService.processOneTimePayment(request);
-	return ResponseEntity.ok(
-			new CustomResponseMessage<>(
-					"One-time payment processed successfully. New balance: " + data.newBalance(),
-					HttpStatus.OK.value(),
-					data
+			@Operation(
+					summary = "Process one-time fee payment",
+					description = "Processes a one-time fee payment for a student, applies incentive credit, updates balance and calculates next due date via Stripe"
 			)
-	);
-}
+			@ApiResponses({
+					@ApiResponse(responseCode = "200", description = "Payment processed successfully"),
+					@ApiResponse(responseCode = "400", description = "Invalid payment amount or payment failed"),
+					@ApiResponse(responseCode = "404", description = "Student or account not found"),
+					@ApiResponse(responseCode = "401", description = "Unauthorized")
+			})
+			@PostMapping("/one-time-fee-payment")
+			public ResponseEntity<CustomResponseMessage<OneTimePaymentResponseDto>> processOneTimePayment(
+					@Valid @RequestBody OneTimePaymentRequestDto request
+			) {
+				OneTimePaymentResponseDto data = feePaymentService.processOneTimePayment(request);
+				return ResponseEntity.ok(
+						new CustomResponseMessage<>(
+								"One-time payment processed successfully. New balance: " + data.newBalance(),
+								HttpStatus.OK.value(),
+								data
+						)
+				);
+			}
 }

@@ -12,10 +12,10 @@ import java.util.Optional;
 import java.util.UUID;
 @Repository
 public interface UserRepository extends JpaRepository< User, UUID> {
-Optional<User> findByEmail(String email);
-boolean existsByEmail(String email);
-List<User> findAllByRole( UserRole role);
-Optional<User> findByMagicLinkToken(String magicLinkToken);
-@Query("SELECT u FROM User u WHERE u.otpExpirationDate > :now")
-List<User> findUsersWithActiveOtp(Instant now);
+	Optional<User> findByEmail(String email);
+	boolean existsByEmail(String email);
+	List<User> findAllByRole( UserRole role);
+	Optional<User> findByMagicLinkToken(String magicLinkToken);
+	@Query("SELECT u FROM User u WHERE u.otpExpirationDate > :now")
+	List<User> findUsersWithActiveOtp(Instant now);
 }
