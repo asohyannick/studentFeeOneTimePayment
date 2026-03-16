@@ -315,6 +315,36 @@ public class SecurityConfig {
 									                                 
 									                                 .requestMatchers(HttpMethod.DELETE, "/api/" + apiVersion + "/teacher-profiles/delete/**")
 									                                 .hasAnyRole("ADMIN", "SUPER_ADMIN")
+									                                 
+									                                 // ─── Attendance Management endpoints ─────────────────────────────────────────────────────
+									                                 
+									                                 .requestMatchers(HttpMethod.POST, "/api/" + apiVersion + "/attendance/create-attendance")
+									                                 .hasAnyRole("ADMIN", "SUPER_ADMIN", "PRINCIPAL", "VICE_PRINCIPAL", "TEACHER", "PROFESSOR", "CLASS_TEACHER")
+									                                 
+									                                 .requestMatchers(HttpMethod.GET, "/api/" + apiVersion + "/attendance/fetch-attendances")
+									                                 .hasAnyRole(
+											                                 "ADMIN", "SUPER_ADMIN", "PRINCIPAL", "VICE_PRINCIPAL", "SCHOOL_DIRECTOR",
+											                                 "SECRETARY", "HEAD_OF_DEPARTMENT", "TEACHER", "PROFESSOR", "CLASS_TEACHER"
+									                                 )
+									                                 
+									                                 .requestMatchers(HttpMethod.GET, "/api/" + apiVersion + "/attendance/fetch-attendance/{id}")
+									                                 .hasAnyRole(
+											                                 "ADMIN", "SUPER_ADMIN", "PRINCIPAL", "VICE_PRINCIPAL", "SCHOOL_DIRECTOR",
+											                                 "SECRETARY", "HEAD_OF_DEPARTMENT", "TEACHER", "PROFESSOR", "CLASS_TEACHER"
+									                                 )
+																	 
+									                                 
+									                                 .requestMatchers(HttpMethod.GET, "/api/" + apiVersion + "/attendance/count")
+									                                 .hasAnyRole("ADMIN", "SUPER_ADMIN", "PRINCIPAL", "VICE_PRINCIPAL", "SCHOOL_DIRECTOR")
+									                                 
+									                                 .requestMatchers(HttpMethod.GET, "/api/" + apiVersion + "/attendance/update-attendance/{id}")
+									                                 .hasAnyRole(
+											                                 "ADMIN", "SUPER_ADMIN", "PRINCIPAL", "VICE_PRINCIPAL", "SCHOOL_DIRECTOR",
+											                                 "TEACHER", "PROFESSOR", "CLASS_TEACHER", "STUDENT"
+									                                 )
+									                                 
+									                                 .requestMatchers(HttpMethod.PATCH, "/api/" + apiVersion + "/attendance/delete-attendance/{id}")
+									                                 .hasAnyRole("ADMIN", "SUPER_ADMIN", "PRINCIPAL", "TEACHER", "PROFESSOR", "CLASS_TEACHER")
 																	 
 									                                 .requestMatchers("/api/" + apiVersion + "/**").permitAll()
 									                                 

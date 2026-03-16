@@ -11,7 +11,7 @@ import com.leedTech.studentFeeOneTimePayment.exception.NotFoundException;
 import com.leedTech.studentFeeOneTimePayment.mapper.studentProfileMapper.StudentProfileMapper;
 import com.leedTech.studentFeeOneTimePayment.repository.studentProfileRepository.StudentProfileRepository;
 import com.leedTech.studentFeeOneTimePayment.repository.userRepository.UserRepository;
-import com.leedTech.studentFeeOneTimePayment.utils.specification.StudentProfileSpecification;
+import com.leedTech.studentFeeOneTimePayment.specification.StudentProfileSpecification;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -206,20 +206,20 @@ public class StudentService {
 			Specification <StudentProfile> spec = Specification
 					                                     .allOf (StudentProfileSpecification.isNotDeleted())
 					                                     .and( StudentProfileSpecification.hasKeyword(keyword))
-					                                     .and(StudentProfileSpecification.hasCurrentClass(currentClass))
-					                                     .and(StudentProfileSpecification.hasAcademicYear(academicYear))
-					                                     .and(StudentProfileSpecification.hasCurrentSection(currentSection))
-					                                     .and(StudentProfileSpecification.hasEnrollmentStatus(enrollmentStatus))
-					                                     .and(StudentProfileSpecification.hasGender(gender))
-					                                     .and(StudentProfileSpecification.hasNationality(nationality))
-					                                     .and(StudentProfileSpecification.hasCity(city))
-					                                     .and(StudentProfileSpecification.hasCountry(country))
-					                                     .and(StudentProfileSpecification.isFeeDefaulter(isFeeDefaulter))
-					                                     .and(StudentProfileSpecification.isBoarder(isBoarder))
-					                                     .and(StudentProfileSpecification.usesSchoolTransport(usesSchoolTransport))
-					                                     .and(StudentProfileSpecification.hasHostelName(hostelName))
-					                                     .and(StudentProfileSpecification.hasTransportRoute(transportRoute))
-					                                     .and(StudentProfileSpecification.hasMinScholarship(minScholarshipPercentage));
+					                                     .and( StudentProfileSpecification.hasCurrentClass(currentClass))
+					                                     .and( StudentProfileSpecification.hasAcademicYear(academicYear))
+					                                     .and( StudentProfileSpecification.hasCurrentSection(currentSection))
+					                                     .and( StudentProfileSpecification.hasEnrollmentStatus(enrollmentStatus))
+					                                     .and( StudentProfileSpecification.hasGender(gender))
+					                                     .and( StudentProfileSpecification.hasNationality(nationality))
+					                                     .and(  StudentProfileSpecification.hasCity(city))
+					                                     .and(  StudentProfileSpecification.hasCountry(country))
+					                                     .and( StudentProfileSpecification.isFeeDefaulter(isFeeDefaulter))
+					                                     .and( StudentProfileSpecification.isBoarder(isBoarder))
+					                                     .and( StudentProfileSpecification.usesSchoolTransport(usesSchoolTransport))
+					                                     .and( StudentProfileSpecification.hasHostelName(hostelName))
+					                                     .and( StudentProfileSpecification.hasTransportRoute(transportRoute))
+					                                     .and( StudentProfileSpecification.hasMinScholarship(minScholarshipPercentage));
 			
 			return studentProfileRepository.findAll(spec, pageable)
 					       .map(studentProfileMapper::toSummaryDto);
