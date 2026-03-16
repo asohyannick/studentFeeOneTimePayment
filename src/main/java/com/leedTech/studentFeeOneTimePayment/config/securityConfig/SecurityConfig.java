@@ -290,6 +290,32 @@ public class SecurityConfig {
 									                                 .requestMatchers(HttpMethod.DELETE, "/api/" + apiVersion + "/reviews/delete/**")
 									                                 .hasAnyRole("ADMIN", "SUPER_ADMIN")
 																	 
+									                                 // ─── Teacher Profile endpoints ────────────────────────────────────────────
+									                                 .requestMatchers(HttpMethod.POST,   "/api/" + apiVersion + "/teacher-profiles/create-profile")
+									                                 .hasAnyRole("ADMIN", "SUPER_ADMIN",  "SECRETARY", "TEACHER", "PROFESSOR", "HEAD_OF_DEPARTMENT", "CLASS_TEACHER", "SUBSTITUTE_TEACHER", "TEACHING_ASSISTANT", "TUTOR")
+									                                 
+									                                 .requestMatchers(HttpMethod.GET,    "/api/" + apiVersion + "/teacher-profiles/fetch-all")
+									                                 .hasAnyRole("ADMIN", "SUPER_ADMIN", "PRINCIPAL", "VICE_PRINCIPAL",
+											                                 "SECRETARY", "HEAD_OF_DEPARTMENT", "TEACHER", "PROFESSOR", "CLASS_TEACHER", "SUBSTITUTE_TEACHER", "TEACHING_ASSISTANT", "TUTOR")
+									                                 
+									                                 .requestMatchers(HttpMethod.GET,    "/api/" + apiVersion + "/teacher-profiles/search")
+									                                 .hasAnyRole("ADMIN", "SUPER_ADMIN", "PRINCIPAL", "VICE_PRINCIPAL", "SECRETARY", "TEACHER", "PROFESSOR",
+											                                 "HEAD_OF_DEPARTMENT", "CLASS_TEACHER", "SUBSTITUTE_TEACHER", "TEACHING_ASSISTANT", "TUTOR")
+									                                 
+									                                 .requestMatchers(HttpMethod.GET,    "/api/" + apiVersion + "/teacher-profiles/count/**")
+									                                 .hasAnyRole("ADMIN", "SUPER_ADMIN", "PRINCIPAL")
+									                                 
+									                                 .requestMatchers(HttpMethod.GET,    "/api/" + apiVersion + "/teacher-profiles/**")
+									                                 .hasAnyRole("ADMIN", "SUPER_ADMIN", "PRINCIPAL", "VICE_PRINCIPAL",
+											                                  "SECRETARY", "TEACHER", "PROFESSOR", "CLASS_TEACHER", "SUBSTITUTE_TEACHER", "TEACHING_ASSISTANT", "TUTOR",
+											                                 "HEAD_OF_DEPARTMENT")
+									                                 
+									                                 .requestMatchers(HttpMethod.PUT,    "/api/" + apiVersion + "/teacher-profiles/update/**")
+									                                 .hasAnyRole("ADMIN", "SUPER_ADMIN", "HEAD_OF_DEPARTMENT", "CLASS_TEACHER", "SUBSTITUTE_TEACHER", "TEACHING_ASSISTANT", "TUTOR")
+									                                 
+									                                 .requestMatchers(HttpMethod.DELETE, "/api/" + apiVersion + "/teacher-profiles/delete/**")
+									                                 .hasAnyRole("ADMIN", "SUPER_ADMIN")
+																	 
 									                                 .requestMatchers("/api/" + apiVersion + "/**").permitAll()
 									                                 
 									                                 // ─── All endpoints beneath must be authenticated  ─────────────────────────────────────────────────────
