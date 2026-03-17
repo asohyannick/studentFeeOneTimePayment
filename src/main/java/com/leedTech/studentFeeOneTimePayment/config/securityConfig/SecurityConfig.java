@@ -333,7 +333,6 @@ public class SecurityConfig {
 											                                 "SECRETARY", "HEAD_OF_DEPARTMENT", "TEACHER", "PROFESSOR", "CLASS_TEACHER"
 									                                 )
 																	 
-									                                 
 									                                 .requestMatchers(HttpMethod.GET, "/api/" + apiVersion + "/attendance/count")
 									                                 .hasAnyRole("ADMIN", "SUPER_ADMIN", "PRINCIPAL", "VICE_PRINCIPAL", "SCHOOL_DIRECTOR")
 									                                 
@@ -345,6 +344,30 @@ public class SecurityConfig {
 									                                 
 									                                 .requestMatchers(HttpMethod.PATCH, "/api/" + apiVersion + "/attendance/delete-attendance/{id}")
 									                                 .hasAnyRole("ADMIN", "SUPER_ADMIN", "PRINCIPAL", "TEACHER", "PROFESSOR", "CLASS_TEACHER")
+									                                 
+									                                 // ─── Assignment Management endpoints ─────────────────────────────────────────────────────
+																	 
+									                                 .requestMatchers(HttpMethod.POST,   "/api/" + apiVersion + "/assignment/add-assignment")
+									                                 .hasAnyRole("ADMIN", "SUPER_ADMIN", "TEACHER", "PROFESSOR", "CLASS_TEACHER", "HEAD_OF_DEPARTMENT")
+									                                 
+									                                 .requestMatchers(HttpMethod.GET,    "/api/" + apiVersion + "/assignment/fetch-assignments")
+									                                 .hasAnyRole("ADMIN", "SUPER_ADMIN", "PRINCIPAL", "VICE_PRINCIPAL",
+											                                 "SCHOOL_DIRECTOR", "SECRETARY", "TEACHER", "PROFESSOR",
+											                                 "CLASS_TEACHER", "HEAD_OF_DEPARTMENT", "STUDENT")
+									                                 
+									                                 .requestMatchers(HttpMethod.GET,    "/api/" + apiVersion + "/assignment/fetch-assignment/**")
+									                                 .hasAnyRole("ADMIN", "SUPER_ADMIN", "PRINCIPAL", "VICE_PRINCIPAL",
+											                                 "SCHOOL_DIRECTOR", "TEACHER", "PROFESSOR",
+											                                 "CLASS_TEACHER", "HEAD_OF_DEPARTMENT", "STUDENT")
+									                                 
+									                                 .requestMatchers(HttpMethod.PUT,    "/api/" + apiVersion + "/assignment/update-assignment/**")
+									                                 .hasAnyRole("ADMIN", "SUPER_ADMIN", "TEACHER", "PROFESSOR", "CLASS_TEACHER", "HEAD_OF_DEPARTMENT")
+									                                 
+									                                 .requestMatchers(HttpMethod.DELETE, "/api/" + apiVersion + "/assignment/delete-assignment/**")
+									                                 .hasAnyRole("ADMIN", "SUPER_ADMIN", "TEACHER", "PROFESSOR")
+									                                 
+									                                 .requestMatchers(HttpMethod.GET,    "/api/" + apiVersion + "/assignment/count")
+									                                 .hasAnyRole("ADMIN", "SUPER_ADMIN", "PRINCIPAL", "VICE_PRINCIPAL", "SCHOOL_DIRECTOR")
 																	 
 									                                 .requestMatchers("/api/" + apiVersion + "/**").permitAll()
 									                                 
