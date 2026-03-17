@@ -152,6 +152,13 @@
             <version>31.4.1</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itext7-core</artifactId>
+            <version>9.5.0</version>
+            <type>pom</type>
+            <scope>compile</scope>
+        </dependency>
 	</dependencies>
 
     <build>

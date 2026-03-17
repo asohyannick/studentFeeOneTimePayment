@@ -368,6 +368,37 @@ public class SecurityConfig {
 									                                 
 									                                 .requestMatchers(HttpMethod.GET,    "/api/" + apiVersion + "/assignment/count")
 									                                 .hasAnyRole("ADMIN", "SUPER_ADMIN", "PRINCIPAL", "VICE_PRINCIPAL", "SCHOOL_DIRECTOR")
+									                                 
+									                                 // ─── Timetable Management endpoints ─────────────────────────────────────────────────────
+																	 
+									                                 .requestMatchers(HttpMethod.POST,   "/api/" + apiVersion + "/time-table/add-timetable")
+									                                 .hasAnyRole("ADMIN", "SUPER_ADMIN", "PRINCIPAL", "VICE_PRINCIPAL",
+											                                 "TEACHER", "PROFESSOR", "CLASS_TEACHER", "HEAD_OF_DEPARTMENT")
+									                                 
+									                                 .requestMatchers(HttpMethod.GET,    "/api/" + apiVersion + "/time-table/fetch-timetables")
+									                                 .hasAnyRole("ADMIN", "SUPER_ADMIN", "PRINCIPAL", "VICE_PRINCIPAL",
+											                                 "SCHOOL_DIRECTOR", "SECRETARY", "TEACHER", "PROFESSOR",
+											                                 "CLASS_TEACHER", "HEAD_OF_DEPARTMENT", "STUDENT")
+									                                 
+									                                 .requestMatchers(HttpMethod.GET,    "/api/" + apiVersion + "/time-table/fetch-timetable/**")
+									                                 .hasAnyRole("ADMIN", "SUPER_ADMIN", "PRINCIPAL", "VICE_PRINCIPAL",
+											                                 "SCHOOL_DIRECTOR", "SECRETARY", "TEACHER", "PROFESSOR",
+											                                 "CLASS_TEACHER", "HEAD_OF_DEPARTMENT", "STUDENT")
+									                                 
+									                                 .requestMatchers(HttpMethod.GET,    "/api/" + apiVersion + "/time-table/count")
+									                                 .hasAnyRole("ADMIN", "SUPER_ADMIN", "PRINCIPAL", "VICE_PRINCIPAL", "SCHOOL_DIRECTOR")
+									                                 
+									                                 .requestMatchers(HttpMethod.GET,    "/api/" + apiVersion + "/time-table/download-pdf")
+									                                 .hasAnyRole("ADMIN", "SUPER_ADMIN", "PRINCIPAL", "VICE_PRINCIPAL",
+											                                 "SCHOOL_DIRECTOR", "SECRETARY", "TEACHER", "PROFESSOR",
+											                                 "CLASS_TEACHER", "HEAD_OF_DEPARTMENT")
+									                                 
+									                                 .requestMatchers(HttpMethod.PUT,    "/api/" + apiVersion + "/time-table/update-timetable/**")
+									                                 .hasAnyRole("ADMIN", "SUPER_ADMIN", "PRINCIPAL", "VICE_PRINCIPAL",
+											                                 "TEACHER", "PROFESSOR", "CLASS_TEACHER", "HEAD_OF_DEPARTMENT")
+									                                 
+									                                 .requestMatchers(HttpMethod.DELETE, "/api/" + apiVersion + "/time-table/delete-timetable/**")
+									                                 .hasAnyRole("ADMIN", "SUPER_ADMIN", "PRINCIPAL")
 																	 
 									                                 .requestMatchers("/api/" + apiVersion + "/**").permitAll()
 									                                 
