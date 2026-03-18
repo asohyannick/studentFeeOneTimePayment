@@ -44,7 +44,7 @@ public class StudentService {
 					       ));
 		}
 		
-		@Transactional(readOnly = true)
+		@Transactional
 		public StudentProfileResponseDto createStudentProfile(StudentProfileRequestDto request) {
 			
 			User student = userRepository.findById(request.getStudentId())
@@ -154,7 +154,7 @@ public class StudentService {
 			return studentProfileMapper.toResponseDto(updated);
 		}
 		
-		@Transactional(readOnly = true)
+		@Transactional
 		public void deleteStudentProfile(UUID studentProfileId) {
 			StudentProfile profile = findProfileById(studentProfileId);
 			

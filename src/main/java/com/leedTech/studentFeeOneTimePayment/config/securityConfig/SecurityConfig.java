@@ -219,9 +219,14 @@ public class SecurityConfig {
 									                                 
 									                                 // ─── Payment Management endpoints ─────────────────────────────────────────────────────
 																	 
-									                                 .requestMatchers ( HttpMethod.POST , "/api/" + apiVersion + "/one-time-fee-payment" )
+									                                 .requestMatchers ( HttpMethod.POST , "/api/" + apiVersion + "/payment/one-time-fee-payment" )
 									                                 .hasAnyRole ( "ADMIN" , "SUPER_ADMIN" , "ACCOUNTANT" , "CASHIER" , "STUDENT" )
-																	 
+									                                 
+									                                 .requestMatchers(HttpMethod.GET, "/api/" + apiVersion + "/payment/fetch-all-payments")
+									                                 .hasAnyRole("ADMIN", "SUPER_ADMIN", "ACCOUNTANT", "CASHIER", "PRINCIPAL", "SCHOOL_DIRECTOR")
+									                                 
+									                                 .requestMatchers(HttpMethod.GET, "/api/" + apiVersion + "/payment/fetch-payments/**")
+									                                 .hasAnyRole("ADMIN", "SUPER_ADMIN", "ACCOUNTANT", "CASHIER", "STUDENT")
 									                                
 									                                 // ─── Courses Management  endpoints ─────────────────────────────────────────────────────
 									                                 .requestMatchers(HttpMethod.POST,   "/api/" + apiVersion + "/courses/create-course")
@@ -399,6 +404,20 @@ public class SecurityConfig {
 									                                 
 									                                 .requestMatchers(HttpMethod.DELETE, "/api/" + apiVersion + "/time-table/delete-timetable/**")
 									                                 .hasAnyRole("ADMIN", "SUPER_ADMIN", "PRINCIPAL")
+									                                 
+									                                 // ─── AI Recommendation endpoints ─────────────────────────────────────────────────────
+									                                 
+									                                 .requestMatchers(HttpMethod.POST, "/api/" + apiVersion + "/ai-recommendation/recommend")
+									                                 .hasAnyRole(
+											                                 "ADMIN", "SUPER_ADMIN",
+											                                 "STUDENT",
+											                                 "TEACHER", "PROFESSOR", "CLASS_TEACHER",
+											                                 "HEAD_OF_DEPARTMENT", "SUBSTITUTE_TEACHER",
+											                                 "TEACHING_ASSISTANT", "TUTOR"
+									                                 )
+																	 
+									                                 .requestMatchers(HttpMethod.GET, "/api/" + apiVersion + "/ai-recommendation/recommend-all")
+									                                 .hasAnyRole("ADMIN", "SUPER_ADMIN", "PRINCIPAL", "HEAD_OF_DEPARTMENT")
 																	 
 									                                 .requestMatchers("/api/" + apiVersion + "/**").permitAll()
 									                                 

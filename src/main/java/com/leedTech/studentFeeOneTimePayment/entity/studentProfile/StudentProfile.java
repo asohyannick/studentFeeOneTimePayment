@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import java.time.Instant;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 @Getter
 @Setter
@@ -244,6 +245,15 @@ public class StudentProfile {
 		
 		@Column(name = "extracurricular_activities", length = 500)
 		private String extracurricularActivities;
+		
+		@ElementCollection
+		private List<String> completedCourses;
+		
+		@ElementCollection
+		private List<String> interests;
+		
+		@ElementCollection
+		private List<String> skills;
 		
 		@Column(name = "notes", length = 1000)
 		private String notes;

@@ -1,5 +1,4 @@
 package com.leedTech.studentFeeOneTimePayment.entity.course;
-
 import com.leedTech.studentFeeOneTimePayment.constant.*;
 import com.leedTech.studentFeeOneTimePayment.entity.review.Review;
 import com.leedTech.studentFeeOneTimePayment.entity.user.User;
@@ -117,22 +116,25 @@ public class Course {
 		
 		@Column(name = "is_active", nullable = false)
 		private boolean active = true;
-		
-		@Column(name = "is_deleted", nullable = false)
+
+		@Column(name = "deleted", nullable = false)
 		private boolean deleted = false;
-		
+
+
 		@Column(name = "is_mandatory", nullable = false)
 		private boolean mandatory = false;
 		
 		@Column(name = "is_elective", nullable = false)
 		private boolean elective = false;
-		
+
+
 		@Column(nullable = false)
 		private boolean allowLateEnrollment = false;
 		
 		@Column(nullable = false)
 		private Integer maxCapacity;
-		
+
+
 		@Column(nullable = false)
 		private Integer currentEnrollmentCount = 0;
 		
@@ -143,6 +145,13 @@ public class Course {
 		
 		@Column(nullable = false)
 		private Double maxScore = 100.0;
+		
+		@ElementCollection
+		private List<String>  essentials;
+		
+		@ElementCollection
+		private List<String> tags;
+		
 		
 		@Enumerated(EnumType.STRING)
 		@Column(nullable = false)
@@ -173,6 +182,12 @@ public class Course {
 			if (this.scheduleType == null)           this.scheduleType = ScheduleType.ONLINE;
 			if (this.currentEnrollmentCount == null) this.currentEnrollmentCount = 0;
 			if (this.maxScore == null)               this.maxScore = 100.0;
+			
+			this.deleted          = false;
+			this.active           = true;
+			this.mandatory        = false;
+			this.elective         = false;
+			this.allowLateEnrollment = false;
 		}
 		
 		@PreUpdate

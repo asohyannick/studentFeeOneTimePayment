@@ -15,28 +15,40 @@ public interface CourseMapper {
 				expression = "java(user.getFirstName() + ' ' + user.getLastName())"
 		)
 		CourseTeacherDto toTeacherDto(User user);
-		
+
 		@Mapping(target = "id",                     ignore = true)
 		@Mapping(target = "teacher",                ignore = true)
 		@Mapping(target = "createdAt",              ignore = true)
 		@Mapping(target = "updatedAt",              ignore = true)
 		@Mapping(target = "deletedAt",              ignore = true)
-		@Mapping(target = "deleted",                ignore = true)
-		@Mapping(target = "currentEnrollmentCount", ignore = true)
+		@Mapping(target = "reviews",                ignore = true)
 		@Mapping(target = "courseUrl",              ignore = true)
+		@Mapping(target = "currentEnrollmentCount", ignore = true)
+		@Mapping(target = "deleted",                constant = "false")
+		@Mapping(target = "active",                 constant = "true")
+		@Mapping(target = "mandatory",              constant = "false")
+		@Mapping(target = "elective",                constant = "false")
+		@Mapping(target = "allowLateEnrollment",     constant = "false")
 		Course toEntity(CourseRequestDto request);
 		
 		@Mapping(target = "teacher", source = "teacher")
 		CourseResponseDto toResponseDto(Course course);
-		
+
 		@Mapping(target = "id",                     ignore = true)
 		@Mapping(target = "teacher",                ignore = true)
 		@Mapping(target = "createdAt",              ignore = true)
 		@Mapping(target = "updatedAt",              ignore = true)
 		@Mapping(target = "deletedAt",              ignore = true)
-		@Mapping(target = "deleted",                ignore = true)
-		@Mapping(target = "currentEnrollmentCount", ignore = true)
+		@Mapping(target = "reviews",                ignore = true)
 		@Mapping(target = "courseUrl",              ignore = true)
+		@Mapping(target = "currentEnrollmentCount", ignore = true)
+		@Mapping(target = "deleted",                constant = "false")
+		@Mapping(target = "active",                 constant = "true")
+		@Mapping(target = "mandatory",              constant = "false")
+		@Mapping(target = "elective",               constant = "false")
+		@Mapping(target = "allowLateEnrollment",    constant = "false")
 		@BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 		void updateEntityFromDto(CourseRequestDto request, @MappingTarget Course course);
+		
+		
 }

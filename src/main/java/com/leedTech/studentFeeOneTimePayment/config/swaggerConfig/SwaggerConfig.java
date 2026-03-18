@@ -30,7 +30,7 @@ public OpenAPI openAPI() {
 
 private Info apiInfo() {
 	return new Info()
-			       .title("Student Fee One Time Payment API")
+			       .title("Student Fee One Time Payment API Developed By Asoh Yannick, Java Software Engineer.")
 			       .description("""
                         REST API for managing student fee one-time payments
                         in the LeedTech School Management System.

@@ -15,6 +15,8 @@ import org.springframework.web.multipart.MultipartException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import java.time.Instant;
+import java.util.Map;
+
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -192,5 +194,20 @@ public ResponseEntity<GlobalExceptionResponseHandler> handleMultipartException(
 			HttpStatus.BAD_REQUEST,
 			request
 	);
+}
+
+@ExceptionHandler(RuntimeException.class)
+public ResponseEntity< Map <String, Object> > handleRuntimeException(
+		RuntimeException ex, HttpServletRequest request) {
+	
+	int status = ex.getMessage().contains("quota") ? 503 : 500;
+	
+	return ResponseEntity.status(status).body(Map.of(
+			"status",    status,
+			"error",     status == 503 ? "Service Unavailable" : "Internal Server Error",
+			"message",   ex.getMessage(),
+			"path",      request.getRequestURI(),
+			"timestamp", Instant.now()
+	));
 }
 }

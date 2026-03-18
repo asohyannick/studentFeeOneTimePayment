@@ -1,8 +1,9 @@
 package com.leedTech.studentFeeOneTimePayment.entity.feePayment;
 
-import com.leedTech.studentFeeOneTimePayment.entity.studentAccount.StudentAccount;
+import com.leedTech.studentFeeOneTimePayment.entity.studentProfile.StudentProfile;
 import jakarta.persistence.*;
 import lombok.*;
+
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -21,14 +22,14 @@ public class FeePayment {
 		@GeneratedValue(strategy = GenerationType.UUID)
 		@Column(updatable = false, nullable = false)
 		private UUID id;
-		
+
 		@ManyToOne(fetch = FetchType.LAZY)
 		@JoinColumn(
-				name = "student_account_id",
+				name = "student_profile_id",
 				nullable = false,
-				foreignKey = @ForeignKey(name = "fk_fee_payments_account")
+				foreignKey = @ForeignKey(name = "fk_fee_payments_student_profile")
 		)
-		private StudentAccount studentAccount;
+		private StudentProfile studentProfile;
 		
 		@Column(name = "student_number", nullable = false, length = 20)
 		private String studentNumber;
