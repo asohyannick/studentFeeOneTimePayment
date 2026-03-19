@@ -31,7 +31,6 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 @Slf4j
 public class TimeTableService {
@@ -41,6 +40,7 @@ public class TimeTableService {
 		private final CourseRepository    courseRepository;
 		private final UserRepository      userRepository;
 		
+		@Transactional
 		public TimetableResponseDTO createTimeTable(TimetableRequestDTO dto) {
 			log.info("Creating timetable entry for class: {}", dto.className());
 			
@@ -82,6 +82,7 @@ public class TimeTableService {
 		}
 		
 		
+		@Transactional
 		public TimetableResponseDTO updateTimeTable(UUID id, TimetableRequestDTO dto) {
 			log.info("Updating timetable entry with id: {}", id);
 			
@@ -108,6 +109,7 @@ public class TimeTableService {
 			return timeTableMapper.toResponseDTO(updated);
 		}
 		
+		@Transactional
 		public void deleteTimeTable(UUID id) {
 			log.info("Deleting timetable entry with id: {}", id);
 			

@@ -1,5 +1,4 @@
 package com.leedTech.studentFeeOneTimePayment.config.securityConfig;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.leedTech.studentFeeOneTimePayment.config.corsConfig.CorsConfig;
 import com.leedTech.studentFeeOneTimePayment.config.firebaseConfig.FirebaseAuthenticationFilter;

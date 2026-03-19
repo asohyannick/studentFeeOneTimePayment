@@ -1,5 +1,4 @@
 package com.leedTech.studentFeeOneTimePayment.config.jwtConfig;
-
 import com.leedTech.studentFeeOneTimePayment.constant.UserRole;
 import com.leedTech.studentFeeOneTimePayment.exception.BadRequestException;
 import io.jsonwebtoken.Claims;

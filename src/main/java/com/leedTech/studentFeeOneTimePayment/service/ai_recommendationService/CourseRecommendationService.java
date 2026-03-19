@@ -175,7 +175,7 @@ public class CourseRecommendationService {
 						continue;
 					}
 					
-					int count = Math.min(3, availableCourses.size()); // default 3 per student
+					int count = Math.min(3, availableCourses.size());
 					
 					String prompt = promptBuilder.build(
 							profile,
@@ -194,7 +194,7 @@ public class CourseRecommendationService {
 			}
 			
 			if (responses.isEmpty()) {
-				throw new IllegalStateException("Could not generate recommendations for any student.");
+				throw new BadRequestException("Could not generate recommendations for any student.");
 			}
 			
 			return responses;

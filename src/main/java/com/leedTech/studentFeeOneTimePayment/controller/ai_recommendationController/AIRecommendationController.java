@@ -1,5 +1,4 @@
 package com.leedTech.studentFeeOneTimePayment.controller.ai_recommendationController;
-
 import com.leedTech.studentFeeOneTimePayment.dto.ai_recommendation.RecommendationRequest;
 import com.leedTech.studentFeeOneTimePayment.dto.ai_recommendation.RecommendationResponse;
 import com.leedTech.studentFeeOneTimePayment.service.ai_recommendationService.CourseRecommendationService;

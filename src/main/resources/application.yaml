@@ -42,6 +42,7 @@ spring:
         ddl-auto: validate
         show-sql: true
         open-in-view: false
+
   mail:
     host: ${MAIL_TRAP_HOST}
     port: ${MAIL_TRAP_PORT}
@@ -187,10 +188,12 @@ cloudinary:
   cloud-name: ${CLOUDINARY_CLOUD_NAME}
   api-key: ${CLOUDINARY_API_KEY}
   api-secret: ${CLOUDINARY_API_SECRET}
+
 logging:
   level:
     org.hibernate.SQL: DEBUG
     org.hibernate.orm.jdbc.bind: TRACE
+
 
 openai:
   api-key: ${GROQ_API_KEY}

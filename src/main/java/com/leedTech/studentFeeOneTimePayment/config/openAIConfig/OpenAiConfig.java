@@ -1,5 +1,4 @@
 package com.leedTech.studentFeeOneTimePayment.config.openAIConfig;
-
 import com.openai.client.OpenAIClient;
 import com.openai.client.okhttp.OpenAIOkHttpClient;
 import org.springframework.beans.factory.annotation.Value;

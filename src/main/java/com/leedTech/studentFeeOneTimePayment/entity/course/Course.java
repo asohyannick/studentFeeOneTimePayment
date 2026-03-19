@@ -169,7 +169,6 @@ public class Course {
 		
 		private Instant deletedAt;
 		
-		// ─── Lifecycle Hooks ──────────────────────────────────────────────────────
 		@PrePersist
 		protected void onCreate() {
 			Instant now = Instant.now();

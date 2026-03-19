@@ -1,14 +1,11 @@
 package com.leedTech.studentFeeOneTimePayment.entity.feePayment;
-
 import com.leedTech.studentFeeOneTimePayment.entity.studentProfile.StudentProfile;
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.UUID;
-
 @Getter
 @Setter
 @NoArgsConstructor

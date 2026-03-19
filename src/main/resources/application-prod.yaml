@@ -1,40 +1,203 @@
 spring:
+  application:
+    name: ${APP_NAME}
+  config:
+    import: optional:file:.env.properties
+  mvc:
+    throw-exception-if-no-handler-found: true
+  web:
+    resources:
+      add-mappings: false
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 50MB
+      file-size-threshold: 2KB
+      resolve-lazily: false
+
   data:
     redis:
       host: ${REDIS_HOST}
       port: ${REDIS_PORT}
       password: ${REDIS_PASSWORD}
-      timeout: 2000ms
       ssl:
         enabled: true
+      timeout: 2000ms
   cache:
     ttl-minutes: ${REDIS_TTL_MINUTES}
   datasource:
-    url: jdbc:postgresql://${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}_prod
+    url: jdbc:postgresql://${DATABASE_HOST}:${DATABASE_PORT}/${DATABASE_NAME}?sslmode=require&sslfactory=org.postgresql.ssl.NonValidatingFactory
     username: ${DATABASE_USER}
     password: ${DATABASE_PASSWORD}
     driver-class-name: org.postgresql.Driver
-    hikari:
-      maximum-pool-size: 20
-      minimum-idle: 5
-      connection-timeout: 30000
-      idle-timeout: 600000
-      max-lifetime: 1800000
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+
   jpa:
-    show-sql: false
     hibernate:
+      format_sql: false
       ddl-auto: validate
+      show-sql: false
+      open-in-view: false
+
+  mail:
+    host: ${MAIL_TRAP_HOST}
+    port: ${MAIL_TRAP_PORT}
+    username: ${MAIL_TRAP_USERNAME}
+    password: ${MAIL_TRAP_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+        debug: false
+  mailtrap:
+    from-email: ${MAIL_FROM}
+    from-name: ${MAIL_FROM_NAME}
 
 server:
   port: ${PORT}
+  tomcat:
+    max-swallow-size: 50MB
+    max-http-form-post-size: 50MB
+    max-connections: ${TOMCAT_MAX_CONNECTIONS:200}
+  error:
+    whitelabel:
+      enabled: false
+    path: /error
+    include-message: always
+    include-binding-errors: always
+
+api:
+  version: ${API_VERSION}
+
+jwt:
+  secret-key: ${JWT_SECRET_KEY}
+  access-token-expiration-ms: ${JWT_ACCESS_TOKEN_EXPIRATION_MS}
+  refresh-token-expiration-ms: ${JWT_REFRESH_TOKEN_EXPIRATION_MS}
+  magic-link-expiration-ms: ${JWT_MAGIC_LINK_EXPIRATION_TOKEN_MS}
+
+stripe:
+  api-key: ${STRIPE_API_KEY}
+
+cors:
+  allowed-origins: ${FRONTEND_DOMAINS}
+  allowed-methods: ${ALLOWED_METHODS}
+
+mailtrap:
+  api-token: ${MAILTRAP_API_TOKEN}
+  from-email: ${MAIL_FROM}
+  from-name: ${MAIL_FROM_NAME}
+
+firebase:
+  project-id: ${FIREBASE_PROJECT_ID}
+  private-key-id: ${FIREBASE_PRIVATE_KEY_ID}
+  private-key: ${FIREBASE_PRIVATE_KEY}
+  client-email: ${FIREBASE_CLIENT_EMAIL}
+  client-id: ${FIREBASE_CLIENT_ID}
+
+seed:
+  admin:
+    email: ${SEED_ADMIN_EMAIL}
+    password: ${SEED_ADMIN_PASSWORD}
+  super-admin:
+    email: ${SEED_SUPER_ADMIN_EMAIL}
+    password: ${SEED_SUPER_ADMIN_PASSWORD}
+  principal:
+    email: ${SEED_PRINCIPAL_EMAIL}
+    password: ${SEED_PRINCIPAL_PASSWORD}
+  vice-principal:
+    email: ${SEED_VICE_PRINCIPAL_EMAIL}
+    password: ${SEED_VICE_PRINCIPAL_PASSWORD}
+  school-director:
+    email: ${SEED_SCHOOL_DIRECTOR_EMAIL}
+    password: ${SEED_SCHOOL_DIRECTOR_PASSWORD}
+  secretary:
+    email: ${SEED_SECRETARY_EMAIL}
+    password: ${SEED_SECRETARY_PASSWORD}
+  receptionist:
+    email: ${SEED_RECEPTIONIST_EMAIL}
+    password: ${SEED_RECEPTIONIST_PASSWORD}
+  teacher:
+    email: ${SEED_TEACHER_EMAIL}
+    password: ${SEED_TEACHER_PASSWORD}
+  professor:
+    email: ${SEED_PROFESSOR_EMAIL}
+    password: ${SEED_PROFESSOR_PASSWORD}
+  head-of-department:
+    email: ${SEED_HEAD_OF_DEPARTMENT_EMAIL}
+    password: ${SEED_HEAD_OF_DEPARTMENT_PASSWORD}
+  class-teacher:
+    email: ${SEED_CLASS_TEACHER_EMAIL}
+    password: ${SEED_CLASS_TEACHER_PASSWORD}
+  substitute-teacher:
+    email: ${SEED_SUBSTITUTE_TEACHER_EMAIL}
+    password: ${SEED_SUBSTITUTE_TEACHER_PASSWORD}
+  teaching-assistant:
+    email: ${SEED_TEACHING_ASSISTANT_EMAIL}
+    password: ${SEED_TEACHING_ASSISTANT_PASSWORD}
+  tutor:
+    email: ${SEED_TUTOR_EMAIL}
+    password: ${SEED_TUTOR_PASSWORD}
+  counselor:
+    email: ${SEED_COUNSELOR_EMAIL}
+    password: ${SEED_COUNSELOR_PASSWORD}
+  librarian:
+    email: ${SEED_LIBRARIAN_EMAIL}
+    password: ${SEED_LIBRARIAN_PASSWORD}
+  accountant:
+    email: ${SEED_ACCOUNTANT_EMAIL}
+    password: ${SEED_ACCOUNTANT_PASSWORD}
+  cashier:
+    email: ${SEED_CASHIER_EMAIL}
+    password: ${SEED_CASHIER_PASSWORD}
+  it-staff:
+    email: ${SEED_IT_STAFF_EMAIL}
+    password: ${SEED_IT_STAFF_PASSWORD}
+  security:
+    email: ${SEED_SECURITY_EMAIL}
+    password: ${SEED_SECURITY_PASSWORD}
+  nurse:
+    email: ${SEED_NURSE_EMAIL}
+    password: ${SEED_NURSE_PASSWORD}
+  janitor:
+    email: ${SEED_JANITOR_EMAIL}
+    password: ${SEED_JANITOR_PASSWORD}
+  driver:
+    email: ${SEED_DRIVER_EMAIL}
+    password: ${SEED_DRIVER_PASSWORD}
+  canteen-staff:
+    email: ${SEED_CANTEEN_STAFF_EMAIL}
+    password: ${SEED_CANTEEN_STAFF_PASSWORD}
+  auditor:
+    email: ${SEED_AUDITOR_EMAIL}
+    password: ${SEED_AUDITOR_PASSWORD}
+  examiner:
+    email: ${SEED_EXAMINER_EMAIL}
+    password: ${SEED_EXAMINER_PASSWORD}
+  guest:
+    email: ${SEED_GUEST_EMAIL}
+    password: ${SEED_GUEST_PASSWORD}
+
+cloudinary:
+  cloud-name: ${CLOUDINARY_CLOUD_NAME}
+  api-key: ${CLOUDINARY_API_KEY}
+  api-secret: ${CLOUDINARY_API_SECRET}
 
 logging:
   level:
-    root: WARN
-    com.leedTech: INFO
+    org.hibernate.SQL: WARN
+    org.hibernate.orm.jdbc.bind: WARN
 
-springdoc:
-  swagger-ui:
-    enabled: false
-  api-docs:
-    enabled: false
+
+openai:
+  api-key: ${GROQ_API_KEY}
+  model: llama-3.3-70b-versatile
+  temperature: 0.4
+  max-tokens: 2000
+  base-url: https://api.groq.com/openai/v1

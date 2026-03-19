@@ -1,10 +1,8 @@
 package com.leedTech.studentFeeOneTimePayment.mapper.reviewMapper;
-
 import com.leedTech.studentFeeOneTimePayment.dto.review.ReviewRequestDto;
 import com.leedTech.studentFeeOneTimePayment.dto.review.ReviewResponseDto;
 import com.leedTech.studentFeeOneTimePayment.entity.review.Review;
 import org.mapstruct.*;
-
 @Mapper (componentModel = "spring")
 public interface ReviewMapper {
 		

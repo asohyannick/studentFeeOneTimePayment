@@ -31,7 +31,7 @@ public class FeePaymentService {
 
 		private final StudentProfileRepository studentProfileRepository;
 		private final FeePaymentRepository feePaymentRepository;
-		private final StripePaymentService     stripePaymentService;
+		private final StripePaymentService   stripePaymentService;
 		
 		@Transactional
 		public OneTimePaymentResponseDto processOneTimePayment( OneTimePaymentRequestDto request) {

@@ -5,7 +5,7 @@ import java.math.RoundingMode;
 
 public class IncentiveCalculator {
 
-private IncentiveCalculator() {}
+        private IncentiveCalculator() {}
 
 		private static final BigDecimal TIER_1_MAX  = new BigDecimal("100000");
 		private static final BigDecimal TIER_2_MAX  = new BigDecimal("500000");

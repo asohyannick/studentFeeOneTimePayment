@@ -17,10 +17,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.time.LocalDate;
 import java.util.UUID;
-
 @RestController
 @RequestMapping("/api/${api.version}/courses")
 @RequiredArgsConstructor

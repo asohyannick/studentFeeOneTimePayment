@@ -1,5 +1,4 @@
 package com.leedTech.studentFeeOneTimePayment.controller.authController;
-
 import com.leedTech.studentFeeOneTimePayment.config.customResponseMessage.CustomResponseMessage;
 import com.leedTech.studentFeeOneTimePayment.dto.auth.*;
 import com.leedTech.studentFeeOneTimePayment.service.userService.UserService;
@@ -14,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
