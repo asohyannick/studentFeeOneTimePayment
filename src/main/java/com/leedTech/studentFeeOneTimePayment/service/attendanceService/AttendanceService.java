@@ -75,7 +75,8 @@ public class AttendanceService {
 						       return new NotFoundException("Attendance record not found with ID: " + id);
 					       });
 		}
-		
+
+		@Transactional
 		public AttendanceResponseDto updateAttendance( UpdateAttendanceRequestDto request) {
 			log.info("Updating attendance record for ID: {}", request.attendanceId());
 			

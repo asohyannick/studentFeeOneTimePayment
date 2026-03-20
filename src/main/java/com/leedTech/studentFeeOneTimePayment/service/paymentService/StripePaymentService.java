@@ -9,6 +9,8 @@ import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.math.BigDecimal;
 @Slf4j
 @Service
@@ -22,6 +24,7 @@ public class StripePaymentService {
 				Stripe.apiKey = stripeApiKey;
 			}
 			
+			@Transactional
 			public PaymentIntent createPaymentIntent(BigDecimal amount, String currency, String studentNumber) {
 				try {
 					long amountInCents = amount.multiply(BigDecimal.valueOf(100)).longValue();
@@ -52,6 +55,7 @@ public class StripePaymentService {
 				}
 			}
 			
+			@Transactional
 			public PaymentIntent confirmPaymentIntent(String paymentIntentId, String paymentMethodId) {
 				try {
 					PaymentIntent intent = PaymentIntent.retrieve(paymentIntentId);

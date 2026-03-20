@@ -28,6 +28,7 @@ public class AssignmentService {
 	private final StudentProfileRepository studentProfileRepository;
 	private final AssignmentMapper assignmentMapper;
 	
+	@Transactional
 	public AssignmentResponseDTO createAssignment(AssignmentRequestDTO dto) {
 		log.info("Creating assignment with name: {}", dto.name());
 		
@@ -67,6 +68,7 @@ public class AssignmentService {
 		return assignmentMapper.toResponseDTO(assignment);
 	}
 	
+	@Transactional
 	public AssignmentResponseDTO updateAssignment(UUID id, AssignmentRequestDTO dto) {
 		log.info("Updating assignment with id: {}", id);
 		
@@ -93,7 +95,7 @@ public class AssignmentService {
 		return assignmentMapper.toResponseDTO(updated);
 	}
 	
-	
+	@Transactional
 	public void deleteAssignment(UUID id) {
 		log.info("Deleting assignment with id: {}", id);
 		

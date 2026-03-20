@@ -1,10 +1,8 @@
 package com.leedTech.studentFeeOneTimePayment.service.ai_recommendationService;
-
 import com.leedTech.studentFeeOneTimePayment.entity.course.Course;
 import com.leedTech.studentFeeOneTimePayment.entity.studentProfile.StudentProfile;
 import com.leedTech.studentFeeOneTimePayment.entity.user.User;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
